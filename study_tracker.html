@@ -31,7 +31,7 @@
     background-size:40px 40px; pointer-events:none; z-index:0;
   }
   .container { max-width:1100px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
-
+ 
   /* HEADER */
   header { padding:40px 0 20px; border-bottom:1px solid var(--border); margin-bottom:32px; }
   .header-inner { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:16px; }
@@ -48,17 +48,17 @@
   .overall-top strong { font-family:'Syne',sans-serif; font-size:1.1rem; color:var(--accent3); }
   .bar-track { height:8px; background:var(--border); border-radius:99px; overflow:hidden; }
   .bar-fill { height:100%; background:linear-gradient(90deg,var(--accent1),var(--accent3)); border-radius:99px; transition:width 0.5s ease; }
-
+ 
   /* TABS */
   .tabs { display:flex; gap:8px; margin-bottom:28px; flex-wrap:wrap; }
   .tab { padding:8px 18px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:'DM Mono',monospace; font-size:0.75rem; cursor:pointer; transition:all 0.2s; letter-spacing:0.05em; }
   .tab:hover { border-color:var(--accent1); color:var(--accent1); }
   .tab.active { background:var(--accent1); border-color:var(--accent1); color:#fff; }
-
+ 
   /* PANELS */
   .panel { display:none; }
   .panel.active { display:block; }
-
+ 
   /* SUBJECT CARDS */
   .subjects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; }
   .subject-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:transform 0.2s; }
@@ -82,7 +82,7 @@
   .topic-item.done .topic-text { text-decoration:line-through; color:var(--muted); }
   .topic-text { font-size:0.72rem; line-height:1.5; }
   .unit-label { font-size:0.6rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); padding:10px 0 4px; opacity:0.7; margin-left:18px; }
-
+ 
   /* DAILY TARGETS */
   .targets-intro { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin-bottom:24px; }
   .targets-intro p { font-size:0.75rem; color:var(--muted); line-height:1.7; }
@@ -122,7 +122,7 @@
   .dt-day-prog { display:flex; align-items:center; gap:8px; }
   .dt-day-prog-bar { width:80px; height:4px; background:var(--border); border-radius:99px; overflow:hidden; }
   .dt-day-prog-fill { height:100%; border-radius:99px; transition:width 0.3s; }
-
+ 
   /* STUDY PLAN (old) */
   .plan-grid { display:grid; gap:16px; }
   .day-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
@@ -144,7 +144,7 @@
   .task-label { font-size:0.73rem; line-height:1.5; }
   .task-time { font-size:0.62rem; color:var(--muted); margin-left:auto; flex-shrink:0; padding-left:8px; }
   .day-hours { font-size:0.65rem; color:var(--muted); margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
-
+ 
   /* STATS */
   .stats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px; margin-bottom:28px; }
   .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
@@ -153,7 +153,7 @@
   .subject-bars { display:grid; gap:12px; }
   .sub-bar-row { display:grid; grid-template-columns:120px 1fr 40px; align-items:center; gap:12px; }
   .sub-bar-name { font-size:0.7rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
+ 
   /* EXAMS */
   .exam-list { display:grid; gap:10px; }
   .exam-row { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 18px; display:flex; align-items:center; gap:16px; }
@@ -163,12 +163,12 @@
   .exam-info { flex:1; }
   .exam-subj { font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:600; }
   .exam-code { font-size:0.65rem; color:var(--muted); margin-top:2px; }
-
+ 
   .reset-btn { background:transparent; border:1px solid var(--border); color:var(--muted); font-family:'DM Mono',monospace; font-size:0.7rem; padding:8px 14px; border-radius:6px; cursor:pointer; transition:all 0.2s; margin-top:20px; }
   .reset-btn:hover { border-color:var(--accent2); color:var(--accent2); }
-
+ 
   .today-pill { background:var(--accent1); color:#fff; font-size:0.58rem; padding:2px 7px; border-radius:99px; letter-spacing:0.06em; }
-
+ 
   @media(max-width:600px) {
     .subjects-grid { grid-template-columns:1fr; }
     .sub-bar-row { grid-template-columns:90px 1fr 36px; }
@@ -197,25 +197,17 @@
       <div class="bar-track"><div class="bar-fill" id="overallBar" style="width:0%"></div></div>
     </div>
   </header>
-
+ 
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('targets',this)">🎯 Daily Targets</button>
-    <button class="tab" onclick="switchTab('syllabus',this)">📚 Syllabus</button>
+    <button class="tab active" onclick="switchTab('syllabus',this)">📚 Syllabus</button>
     <button class="tab" onclick="switchTab('stats',this)">📊 Stats</button>
     <button class="tab" onclick="switchTab('exams',this)">🗓 Exams</button>
   </div>
-
-  <div id="panel-targets" class="panel active">
-    <div class="targets-intro">
-      <p>Smart day-by-day plan from <strong>Apr 3 → Apr 20</strong>. Heavy focus on upcoming exams, lighter parallel coverage of later subjects. <strong>Eve of each exam = full revision only.</strong> Exam days = half sessions (exam at 3 PM). Progress saves automatically. ✓</p>
-    </div>
-    <div class="day-targets-grid" id="targetsGrid"></div>
-  </div>
-
-  <div id="panel-syllabus" class="panel">
+ 
+  <div id="panel-syllabus" class="panel active">
     <div class="subjects-grid" id="subjectsGrid"></div>
   </div>
-
+ 
   <div id="panel-stats" class="panel">
     <div class="stats-grid" id="statsGrid"></div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
@@ -225,12 +217,12 @@
     <br>
     <button class="reset-btn" onclick="resetAll()">⚠ Reset All Progress</button>
   </div>
-
+ 
   <div id="panel-exams" class="panel">
     <div class="exam-list" id="examList"></div>
   </div>
 </div>
-
+ 
 <script>
 const SUBJECTS = [
   { id:'tnm', name:'Transforms & Numerical Methods', code:'MA11002', examDate:'2026-04-13', color:'#7c6aff', bg:'rgba(124,106,255,0.12)',
@@ -278,275 +270,23 @@ const SUBJECTS = [
       {label:'Misc Devices & Communication',topics:['LED, photodiode, phototransistor','Snell\'s law, TIR & fiber optics','AM fundamentals','FM fundamentals']}
     ]}
 ];
-
-// ─── DAILY TARGETS DATA ───
-// Types: 'normal' | 'exam-eve' | 'exam-day' | 'post-exam'
-// Sessions inside each day with tasks
-const DAILY_TARGETS = [
-  // APR 3 - Day 1: Heavy T&NM start
-  { date:'2026-04-03', weekday:'Thursday', title:'T&NM — Laplace Deep Dive', type:'normal', totalHours:6,
-    sessions:[
-      {label:'Morning Session', time:'9 AM – 12 PM', color:'#7c6aff', tasks:[
-        {t:'Laplace transform definition, linearity, first shifting theorem', d:'45m'},
-        {t:'Transforms of derivatives & integrals — theory + 5 problems', d:'45m'},
-        {t:'Unit step function (Heaviside) + Dirac delta function', d:'45m'},
-        {t:'Second shifting theorem + 5 problems', d:'45m'},
-      ]},
-      {label:'Evening Session', time:'4 PM – 7 PM', color:'#7c6aff', tasks:[
-        {t:'Convolution theorem — proof + 4 numericals', d:'45m'},
-        {t:'Solving ODEs using Laplace transform (3 full problems)', d:'1h'},
-        {t:'Differentiation & integration of transforms', d:'45m'},
-        {t:'Review & write formula sheet: Laplace', d:'30m'},
-      ]}
-    ]},
-  // APR 4
-  { date:'2026-04-04', weekday:'Friday', title:'T&NM — Inverse LT + Fourier Series', type:'normal', totalHours:6,
-    sessions:[
-      {label:'Morning Session', time:'9 AM – 12 PM', color:'#7c6aff', tasks:[
-        {t:'Inverse Laplace transform — partial fractions method', d:'45m'},
-        {t:'Inverse LT — convolution method + 4 problems', d:'45m'},
-        {t:'Fourier series: Euler formulas, period 2π', d:'45m'},
-        {t:'Even & odd functions + half-range expansions', d:'45m'},
-      ]},
-      {label:'Evening Session', time:'4 PM – 7 PM', color:'#7c6aff', tasks:[
-        {t:'Arbitrary period Fourier series + 3 problems', d:'1h'},
-        {t:'Fourier integral + Fourier cosine & sine transforms', d:'1h'},
-        {t:'Quick Chemistry preview: Internal energy, enthalpy, entropy (light read)', d:'30m'},
-        {t:'T&NM formula sheet update', d:'30m'},
-      ]}
-    ]},
-  // APR 5
-  { date:'2026-04-05', weekday:'Saturday', title:'T&NM — Fourier Transform + Numerical Errors', type:'normal', totalHours:6,
-    sessions:[
-      {label:'Morning Session', time:'9 AM – 12 PM', color:'#7c6aff', tasks:[
-        {t:'Fourier transform, inverse Fourier transform, linearity', d:'45m'},
-        {t:'Fourier transform of derivatives + convolution (Fourier)', d:'45m'},
-        {t:'Errors: truncation, rounding, types — theory + examples', d:'30m'},
-        {t:'Bisection method + Fixed point iteration (3 numericals each)', d:'1h'},
-      ]},
-      {label:'Evening Session', time:'4 PM – 7 PM', color:'#7c6aff', tasks:[
-        {t:'Newton-Raphson method — 5 numerical problems', d:'1h'},
-        {t:'Regula-Falsi + Secant method + rate of convergence', d:'45m'},
-        {t:'Chemistry: Gibbs function, Helmholtz, van\'t Hoff (light read)', d:'45m'},
-      ]}
-    ]},
-  // APR 6
-  { date:'2026-04-06', weekday:'Sunday', title:'T&NM — Interpolation + Numerical Integration', type:'normal', totalHours:6,
-    sessions:[
-      {label:'Morning Session', time:'9 AM – 12 PM', color:'#7c6aff', tasks:[
-        {t:'Finite differences & operators — forward, backward, central', d:'45m'},
-        {t:'Newton\'s forward & backward difference interpolation (3 problems)', d:'1h'},
-        {t:'Newton\'s divided difference + Lagrange interpolation (3 problems)', d:'1h'},
-      ]},
-      {label:'Evening Session', time:'4 PM – 7 PM', color:'#7c6aff', tasks:[
-        {t:'Numerical differentiation 1st & 2nd order using difference table', d:'45m'},
-        {t:'Trapezoidal rule + Simpson\'s 1/3rd & 3/8th (4 problems)', d:'1h'},
-        {t:'Gauss-Legendre 2-point & 3-point formulae (2 problems)', d:'45m'},
-        {t:'Chemistry: Kinetics rate laws, Arrhenius (15-min preview)', d:'30m'},
-      ]}
-    ]},
-  // APR 7
-  { date:'2026-04-07', weekday:'Monday', title:'T&NM — ODE Methods + Mock Problems', type:'normal', totalHours:6,
-    sessions:[
-      {label:'Morning Session', time:'9 AM – 12 PM', color:'#7c6aff', tasks:[
-        {t:'Taylor series method for ODEs — 2 full problems', d:'45m'},
-        {t:'Euler\'s & Modified Euler\'s method — 3 problems each', d:'1h'},
-        {t:'RK2 & RK4 — 3 full problems each', d:'1h'},
-      ]},
-      {label:'Evening Session', time:'4 PM – 7 PM', color:'#7c6aff', tasks:[
-        {t:'2nd order ODE → system of 1st order + RK4 solution', d:'45m'},
-        {t:'Gauss-Seidel & Gauss-Jacobi — 3 problems each', d:'45m'},
-        {t:'T&NM mock: attempt 5 PYQ problems (mixed units)', d:'1h'},
-        {t:'Chemistry: Michaelis-Menten + spectroscopy intro (light read)', d:'30m'},
-      ]}
-    ]},
-  // APR 8
-  { date:'2026-04-08', weekday:'Tuesday', title:'T&NM — Full Revision + Formula Sheet', type:'normal', totalHours:6,
-    sessions:[
-      {label:'Morning Session', time:'9 AM – 12 PM', color:'#7c6aff', tasks:[
-        {t:'Revise Laplace: all theorems + 3 quick problems', d:'1h'},
-        {t:'Revise Fourier: series + transform + 3 quick problems', d:'1h'},
-        {t:'Revise Numerical methods: all root-finding methods flashcards', d:'45m'},
-      ]},
-      {label:'Evening Session', time:'4 PM – 7 PM', color:'#7c6aff', tasks:[
-        {t:'Revise interpolation + integration methods with example each', d:'1h'},
-        {t:'Revise RK4 + Gauss methods — write steps from memory', d:'45m'},
-        {t:'Solve 1 full mock paper / PYQ paper for T&NM', d:'1h'},
-      ]}
-    ]},
-  // APR 9
-  { date:'2026-04-09', weekday:'Wednesday', title:'Chemistry — Thermodynamics + Kinetics', type:'normal', totalHours:5,
-    sessions:[
-      {label:'Morning Session', time:'9 AM – 12 PM', color:'#ff6a9b', tasks:[
-        {t:'Thermodynamics: G, H, S, Gibbs-Helmholtz eq derivation', d:'1h'},
-        {t:'van\'t Hoff isotherm & isochore + Clapeyron-Clausius + numericals', d:'1h'},
-        {t:'Chemical potential, partial molar properties, Gibbs-Duhem', d:'1h'},
-      ]},
-      {label:'Evening Session', time:'4 PM – 6 PM', color:'#ff6a9b', tasks:[
-        {t:'Kinetics: rate laws, steady state, parallel/opposing/consecutive reactions', d:'1h'},
-        {t:'Arrhenius + Collision + Lindemann + Absolute rate theory', d:'1h'},
-      ]}
-    ]},
-  // APR 10
-  { date:'2026-04-10', weekday:'Thursday', title:'Chemistry — Spectroscopy + Electrochemistry', type:'normal', totalHours:5,
-    sessions:[
-      {label:'Morning Session', time:'9 AM – 12 PM', color:'#ff6a9b', tasks:[
-        {t:'Enzyme kinetics: Michaelis-Menten + Lineweaver-Burk plot', d:'45m'},
-        {t:'UV-Vis: Beer-Lambert, chromophore/auxochrome, Woodward-Fieser rules (5 problems)', d:'1h'},
-        {t:'IR spectroscopy: vibrational modes, Hooke\'s law, functional groups', d:'45m'},
-        {t:'NMR: chemical shift, shielding/deshielding, n+1 rule, structural elucidation', d:'45m'},
-      ]},
-      {label:'Evening Session', time:'4 PM – 6 PM', color:'#ff6a9b', tasks:[
-        {t:'Nernst equation: all 4 applications with numericals', d:'1h'},
-        {t:'Fuel cells (AFC, PEMFC, SOFC, MCFC) + battery types', d:'30m'},
-        {t:'Smart materials: types, stimulus-response, applications (quick)', d:'30m'},
-      ]}
-    ]},
-  // APR 11 — EVE OF CHEM EXAM
-  { date:'2026-04-11', weekday:'Friday', title:'⚡ Chemistry — Final Revision Only', type:'exam-eve', totalHours:4,
-    sessions:[
-      {label:'Full Day Revision', time:'10 AM – 2 PM', color:'#ff6a9b', tasks:[
-        {t:'Thermodynamics: write all formulas + key derivations from memory', d:'1h'},
-        {t:'Kinetics: all theories summary + 3 quick numericals', d:'45m'},
-        {t:'Spectroscopy: Woodward-Fieser problems (4) + NMR elucidation (2)', d:'1h'},
-        {t:'Electrochemistry: Nernst numericals (4 types) + battery chart', d:'45m'},
-        {t:'Smart materials: 1-page summary', d:'30m'},
-      ]}
-    ]},
-  // APR 12 — EVE OF T&NM EXAM
-  { date:'2026-04-12', weekday:'Saturday', title:'🔥 T&NM — Final Revision Only', type:'exam-eve', totalHours:5,
-    sessions:[
-      {label:'Full Day Revision', time:'9 AM – 2 PM', color:'#7c6aff', tasks:[
-        {t:'Laplace: all formulas + 3 inverse LT problems + 2 ODE problems', d:'1.5h'},
-        {t:'Fourier: series formula + 2 problems + FT + 2 problems', d:'1h'},
-        {t:'Numerical: all root-finding methods — steps & convergence', d:'45m'},
-        {t:'Interpolation: Newton\'s forward/backward + Lagrange (1 each)', d:'30m'},
-        {t:'Integration: Trapezoidal, Simpson, Gauss-Legendre (1 each)', d:'30m'},
-        {t:'ODE: RK4 full problem from memory', d:'30m'},
-        {t:'Last-hour chill: scan formula sheet only', d:'15m'},
-      ]}
-    ]},
-  // APR 13 — T&NM EXAM DAY
-  { date:'2026-04-13', weekday:'Sunday', title:'📝 T&NM EXAM DAY', type:'exam-day', totalHours:2,
-    sessions:[
-      {label:'Pre-Exam (Morning)', time:'9 AM – 12 PM', color:'#7c6aff', tasks:[
-        {t:'Quick scan of Laplace formula sheet (don\'t study new things)', d:'30m'},
-        {t:'Scan Fourier & Numerical formulas — key steps only', d:'30m'},
-        {t:'Relax, eat well, reach exam hall by 2:45 PM', d:'—'},
-      ]},
-      {label:'Post-Exam (Evening)', time:'6 PM – 8 PM', color:'#ff6a9b', tasks:[
-        {t:'Chemistry: Thermodynamics quick revision (formulas)', d:'1h'},
-        {t:'Chemistry: Kinetics reaction mechanisms quick review', d:'1h'},
-      ]}
-    ]},
-  // APR 14 — Day between T&NM & Chem: EVE OF CHEM
-  { date:'2026-04-14', weekday:'Monday', title:'⚡ Chemistry — Eve of Exam Revision', type:'exam-eve', totalHours:5,
-    sessions:[
-      {label:'Full Revision', time:'9 AM – 2 PM', color:'#ff6a9b', tasks:[
-        {t:'Thermodynamics: all numericals solved from memory', d:'1h'},
-        {t:'Kinetics: all 5 theories summary + Michaelis-Menten', d:'45m'},
-        {t:'UV-Vis: 4 Woodward-Fieser calculation problems', d:'1h'},
-        {t:'IR + NMR: functional group ID + structural elucidation (3 compounds)', d:'1h'},
-        {t:'Nernst equation: 4 types of numericals solved', d:'45m'},
-        {t:'Batteries & Smart materials — quick last read', d:'30m'},
-      ]}
-    ]},
-  // APR 15 — CHEM EXAM DAY
-  { date:'2026-04-15', weekday:'Tuesday', title:'📝 Chemistry EXAM DAY', type:'exam-day', totalHours:2,
-    sessions:[
-      {label:'Pre-Exam (Morning)', time:'10 AM – 12 PM', color:'#ff6a9b', tasks:[
-        {t:'Scan Nernst + Woodward-Fieser formula sheet', d:'30m'},
-        {t:'Quick mental walkthrough: kinetics reaction types', d:'30m'},
-        {t:'Relax, eat well, reach exam hall by 2:45 PM', d:'—'},
-      ]},
-      {label:'Post-Exam (Evening)', time:'6 PM – 8 PM', color:'#6affcc', tasks:[
-        {t:'English: Non-verbal communication types (kinesics etc.) — quick read', d:'45m'},
-        {t:'English: Business letter formats — read 2 sample letters', d:'45m'},
-      ]}
-    ]},
-  // APR 15 EVENING → APR 16 morning is EVE: do English + CIE together
-  { date:'2026-04-16', weekday:'Wednesday', title:'📝 English EXAM + CIE Prep', type:'exam-day', totalHours:2,
-    sessions:[
-      {label:'Pre-Exam (Morning — English Eve Revision)', time:'9 AM – 12 PM', color:'#6affcc', tasks:[
-        {t:'Communication barriers, levels, verbal/non-verbal full revision', d:'45m'},
-        {t:'Grammar: error detection practice (10 sentences)', d:'30m'},
-        {t:'Business letter + Technical report formats — quick scan', d:'30m'},
-        {t:'Literature: key themes & quotes for all 5 works', d:'45m'},
-      ]},
-      {label:'Post-Exam — CIE Start', time:'6 PM – 8 PM', color:'#ffcc6a', tasks:[
-        {t:'CIE: Creativity types, barriers, left/right brain, Guilford\'s test', d:'1h'},
-        {t:'CIE: Entrepreneurship — feasibility, business plan, Narayana Murthy case', d:'1h'},
-      ]}
-    ]},
-  // APR 17 — CIE EXAM DAY
-  { date:'2026-04-17', weekday:'Thursday', title:'📝 CIE EXAM DAY + BEE Start', type:'exam-day', totalHours:2,
-    sessions:[
-      {label:'Pre-Exam (Eve Revision)', time:'9 AM – 11:30 AM', color:'#ffcc6a', tasks:[
-        {t:'CIE: Innovation types + barriers + Indian SMEs', d:'30m'},
-        {t:'CIE: Business model, elevator pitch, Narayana Murthy case study', d:'30m'},
-        {t:'CIE: ABCs of Innovation + key definitions scan', d:'30m'},
-      ]},
-      {label:'Post-Exam — BEE Start', time:'6 PM – 8 PM', color:'#6ab4ff', tasks:[
-        {t:'BEE: KVL/KCL + mesh analysis — theory + 3 numericals', d:'1h'},
-        {t:'BEE: Nodal analysis + superposition — 3 numericals', d:'1h'},
-      ]}
-    ]},
-  // APR 18 — BEE EXAM DAY
-  { date:'2026-04-18', weekday:'Friday', title:'📝 BEE EXAM DAY + Electronics Start', type:'exam-day', totalHours:2,
-    sessions:[
-      {label:'Pre-Exam (Eve Revision)', time:'9 AM – 12 PM', color:'#6ab4ff', tasks:[
-        {t:'BEE DC: star-delta, source transformation — formula scan', d:'30m'},
-        {t:'BEE AC: RMS/phasor/RLC/3-phase — key formulas', d:'45m'},
-        {t:'BEE Electromagnetic: BH curve, reluctance, analogy', d:'30m'},
-        {t:'BEE Safety: earthing, MCB, RCCB, shock — quick read', d:'30m'},
-      ]},
-      {label:'Post-Exam — Basic Electronics Start', time:'6 PM – 8 PM', color:'#ff9f6a', tasks:[
-        {t:'Electronics: Semiconductors, diode characteristics, rectifier formulas', d:'1h'},
-        {t:'Electronics: Zener diode, BJT configurations, α β γ', d:'1h'},
-      ]}
-    ]},
-  // APR 19 — Day before Electronics: Full Electronics
-  { date:'2026-04-19', weekday:'Saturday', title:'🔥 Basic Electronics — Final Revision', type:'exam-eve', totalHours:5,
-    sessions:[
-      {label:'Full Day Revision', time:'9 AM – 2 PM', color:'#ff9f6a', tasks:[
-        {t:'Diode: p-n junction, V-I characteristics, rectifier efficiency & PIV calculations', d:'1h'},
-        {t:'BJT: all 3 configurations, load line, Q-point, biasing numerical', d:'1h'},
-        {t:'JFET concept + Op-Amp: inverting, non-inverting, summing, diff amplifier', d:'45m'},
-        {t:'Digital: truth tables for all gates, universal gates proof, flip-flop states', d:'1h'},
-        {t:'Fiber optics: Snell\'s law, TIR, NA + AM/FM fundamentals', d:'30m'},
-        {t:'Electronics: formula sheet final scan', d:'30m'},
-      ]}
-    ]},
-  // APR 20 — ELECTRONICS EXAM
-  { date:'2026-04-20', weekday:'Sunday', title:'📝 Basic Electronics EXAM DAY 🎉', type:'exam-day', totalHours:1,
-    sessions:[
-      {label:'Pre-Exam (Morning)', time:'10 AM – 12 PM', color:'#ff9f6a', tasks:[
-        {t:'Scan diode & rectifier formula sheet', d:'20m'},
-        {t:'Scan BJT configurations + Op-Amp gains', d:'20m'},
-        {t:'Scan digital gates truth table + flip-flop', d:'20m'},
-        {t:'Relax, you\'ve got this. Reach hall by 2:45 PM 🚀', d:'—'},
-      ]}
-    ]},
-];
-
+ 
 // ── STATE ──
 function getState(){ try{return JSON.parse(localStorage.getItem('esem_state')||'{}')}catch{return{}} }
 function setState(s){ localStorage.setItem('esem_state',JSON.stringify(s)) }
 function toggleTopic(sid,ui,ti){const s=getState();const k=`${sid}_${ui}_${ti}`;s[k]=!s[k];setState(s);render()}
-function toggleDtTask(di,si,ti){const s=getState();const k=`dt_${di}_${si}_${ti}`;s[k]=!s[k];setState(s);render()}
 function resetAll(){if(confirm('Reset ALL progress?')){localStorage.removeItem('esem_state');render()}}
-
+ 
 // ── RENDER ──
 function render(){
   const s=getState();
   renderCountdown();
   renderOverall(s);
-  renderTargets(s);
   renderSyllabus(s);
   renderStats(s);
   renderExams();
 }
-
+ 
 function renderCountdown(){
   const first=new Date('2026-04-13T15:00:00');
   const now=new Date();
@@ -556,7 +296,7 @@ function renderCountdown(){
   const upcoming=SUBJECTS.filter(s=>new Date(s.examDate)>=new Date()).sort((a,b)=>new Date(a.examDate)-new Date(b.examDate));
   if(upcoming.length) document.getElementById('nextExamLabel').textContent=`→ Next: ${upcoming[0].code} on Apr ${new Date(upcoming[0].examDate).getDate()}`;
 }
-
+ 
 function renderOverall(s){
   let total=0,done=0;
   SUBJECTS.forEach(sub=>sub.units.forEach((u,ui)=>u.topics.forEach((_,ti)=>{total++;if(s[`${sub.id}_${ui}_${ti}`])done++;})));
@@ -564,82 +304,9 @@ function renderOverall(s){
   document.getElementById('overallPct').textContent=pct+'%';
   document.getElementById('overallBar').style.width=pct+'%';
 }
-
-function renderTargets(s){
-  const grid=document.getElementById('targetsGrid');
-  grid.innerHTML='';
-  const today=new Date(); today.setHours(0,0,0,0);
-  DAILY_TARGETS.forEach((day,di)=>{
-    const dDate=new Date(day.date); dDate.setHours(0,0,0,0);
-    const isToday=dDate.getTime()===today.getTime();
-    const isPast=dDate<today;
-    // count tasks
-    let totalT=0,doneT=0;
-    day.sessions.forEach((sess,si)=>sess.tasks.forEach((_,ti)=>{totalT++;if(s[`dt_${di}_${si}_${ti}`])doneT++;}));
-    const pct=totalT?Math.round(doneT/totalT*100):0;
-    const typeClass=day.type==='exam-eve'?'exam-eve':day.type==='exam-day'?'exam-day':'';
-    const card=document.createElement('div');
-    card.className=`dt-card ${typeClass} ${isToday?'today-card open':''}`;
-    // badge
-    let badge='';
-    if(day.type==='exam-eve') badge=`<span class="dt-type-badge" style="background:rgba(255,204,106,0.15);color:#ffcc6a">EVE OF EXAM</span>`;
-    else if(day.type==='exam-day') badge=`<span class="dt-type-badge" style="background:rgba(248,113,113,0.15);color:#f87171">EXAM DAY</span>`;
-    else badge=`<span class="dt-type-badge" style="background:rgba(124,106,255,0.15);color:#7c6aff">STUDY DAY</span>`;
-    const todayPill=isToday?`<span class="today-pill">TODAY</span>`:'';
-    const pastStyle=isPast&&!isToday?'opacity:0.5':'';
-    // sessions HTML
-    const sessHTML=day.sessions.map((sess,si)=>{
-      const tasksHTML=sess.tasks.map((task,ti)=>{
-        const done=!!s[`dt_${di}_${si}_${ti}`];
-        return `<div class="dt-task ${done?'done':''}" onclick="toggleDtTask(${di},${si},${ti})">
-          <div class="dt-check">${done?'✓':''}</div>
-          <div class="dt-task-text">${task.t}</div>
-          <div class="dt-task-dur">${task.d}</div>
-        </div>`;
-      }).join('');
-      return `<div class="dt-session">
-        <div class="dt-session-header">
-          <div class="dt-session-label" style="color:${sess.color}">${sess.label}</div>
-          <div class="dt-session-time">${sess.time}</div>
-        </div>
-        ${tasksHTML}
-      </div>`;
-    }).join('');
-    // day prog bar fill color based on pct
-    const barColor=pct===100?'#4ade80':day.sessions[0]?.color||'#7c6aff';
-    card.style.cssText+=pastStyle;
-    card.innerHTML=`
-      <div class="dt-header" onclick="toggleDt(this)">
-        <div class="dt-dateblock">
-          <div class="dt-day-num" style="color:${day.sessions[0]?.color||'#7c6aff'}">${new Date(day.date).getDate()}</div>
-          <div class="dt-month">Apr</div>
-        </div>
-        <div class="dt-info">
-          <div class="dt-weekday">${day.weekday} ${todayPill}</div>
-          <div class="dt-title">${day.title}</div>
-        </div>
-        <div class="dt-meta">
-          ${badge}
-          <div class="dt-prog">${doneT}/${totalT}</div>
-        </div>
-        <div class="dt-toggle">▼</div>
-      </div>
-      <div class="dt-body">
-        ${sessHTML}
-        <div class="dt-footer">
-          <div class="dt-total-time">~${day.totalHours}h total study time</div>
-          <div class="dt-day-prog">
-            <div class="dt-day-prog-bar"><div class="dt-day-prog-fill" style="width:${pct}%;background:${barColor}"></div></div>
-            <span style="font-size:0.65rem;color:${barColor}">${pct}%</span>
-          </div>
-        </div>
-      </div>`;
-    grid.appendChild(card);
-  });
-}
-
-function toggleDt(el){el.closest('.dt-card').classList.toggle('open')}
-
+ 
+ 
+ 
 function renderSyllabus(s){
   const grid=document.getElementById('subjectsGrid');
   grid.innerHTML='';
@@ -679,28 +346,29 @@ function renderSyllabus(s){
     grid.appendChild(card);
   });
 }
-
+ 
 function renderStats(s){
-  let totalTopics=0,doneTopics=0,totalTasks=0,doneTasks=0;
+  let totalTopics=0,doneTopics=0;
   SUBJECTS.forEach(sub=>sub.units.forEach((u,ui)=>u.topics.forEach((_,ti)=>{totalTopics++;if(s[`${sub.id}_${ui}_${ti}`])doneTopics++;})));
-  DAILY_TARGETS.forEach((day,di)=>day.sessions.forEach((sess,si)=>sess.tasks.forEach((_,ti)=>{totalTasks++;if(s[`dt_${di}_${si}_${ti}`])doneTasks++;})));
-  const subsDone=SUBJECTS.filter(sub=>{let t=0,d=0;sub.units.forEach((u,ui)=>u.topics.forEach((_,ti)=>{t++;if(s[`${sub.id}_${ui}_${ti}`])d++;}));return d===t;}).length;
+  const subsDone=SUBJECTS.filter(sub=>{let t=0,d=0;sub.units.forEach((u,ui)=>u.topics.forEach((_,ti)=>{t++;if(s[`${sub.id}_${ui}_${ti}`])d++;}));return d===t}).length;
   document.getElementById('statsGrid').innerHTML=`
     <div class="stat-card"><div class="stat-num" style="color:var(--accent3)">${doneTopics}</div><div class="stat-label">Topics Done</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--accent1)">${totalTopics-doneTopics}</div><div class="stat-label">Topics Left</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--accent4)">${doneTasks}</div><div class="stat-label">Daily Tasks Done</div></div>
     <div class="stat-card"><div class="stat-num" style="color:var(--accent2)">${subsDone}/6</div><div class="stat-label">Subjects Complete</div></div>`;
-  document.getElementById('subjectBars').innerHTML=SUBJECTS.map(sub=>{
-    let t=0,d=0;sub.units.forEach((u,ui)=>u.topics.forEach((_,ti)=>{t++;if(s[`${sub.id}_${ui}_${ti}`])d++;}));
+  const bars=document.getElementById('subjectBars');
+  bars.innerHTML=SUBJECTS.map(sub=>{
+    let t=0,d=0;
+    sub.units.forEach((u,ui)=>u.topics.forEach((_,ti)=>{t++;if(s[`${sub.id}_${ui}_${ti}`])d++;}));
     const pct=t?Math.round(d/t*100):0;
     return `<div class="sub-bar-row">
       <div class="sub-bar-name" style="color:${sub.color}">${sub.code}</div>
       <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${pct}%;background:${sub.color}"></div></div>
-      <div style="font-size:0.7rem;color:${sub.color};text-align:right">${pct}%</div>
+      <div class="sub-bar-pct" style="color:${sub.color}">${pct}%</div>
     </div>`;
   }).join('');
 }
-
+ 
+ 
 function renderExams(){
   document.getElementById('examList').innerHTML=SUBJECTS.map(sub=>{
     const examDate=new Date(sub.examDate);
@@ -713,15 +381,16 @@ function renderExams(){
     </div>`;
   }).join('');
 }
-
+ 
 function switchTab(name,el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   el.classList.add('active');
 }
-
+ 
 render();
 </script>
 </body>
 </html>
+ 
