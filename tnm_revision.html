@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T&NM Revision Sheet 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090f;--s:#12121a;--s2:#1a1a26;--b:#252535;--p:#7c6aff;--g:#4ade80;--y:#facc15;--r:#f87171;--o:#fb923c;--t:#e2e2f0;--m:#6b6b85}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--t);font-family:'DM Mono',monospace;font-size:13px;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(124,106,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(124,106,255,0.03) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0}
+.wrap{max-width:960px;margin:0 auto;padding:24px 16px;position:relative;z-index:1}
+
+/* HEADER */
+h1{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,4vw,2rem);font-weight:800;letter-spacing:-0.02em}
+h1 span{color:var(--p)}
+.subtitle{color:var(--m);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--b)}
+.exam-pill{background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.3);color:var(--r);padding:8px 16px;border-radius:8px;font-size:11px;text-align:center}
+.exam-pill strong{display:block;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800}
+
+/* TABS */
+.tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:6px 14px;border-radius:6px;border:1px solid var(--b);background:transparent;color:var(--m);font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;transition:all 0.2s;letter-spacing:0.04em}
+.tab:hover{border-color:var(--p);color:var(--p)}
+.tab.active{background:var(--p);border-color:var(--p);color:#fff}
+.panel{display:none}.panel.active{display:block}
+
+/* PREDICTION CARDS */
+.pred-grid{display:grid;gap:10px}
+.pred-card{background:var(--s);border:1px solid var(--b);border-radius:10px;overflow:hidden}
+.pred-header{padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+.pred-header:hover{background:rgba(255,255,255,0.02)}
+.chance-bar-wrap{width:70px;flex-shrink:0}
+.chance-label{font-size:10px;color:var(--m);margin-bottom:3px}
+.chance-bar{height:6px;background:var(--b);border-radius:99px;overflow:hidden}
+.chance-fill{height:100%;border-radius:99px;transition:width 0.4s}
+.pred-title{flex:1;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700}
+.pred-pct{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;flex-shrink:0}
+.pred-toggle{color:var(--m);font-size:11px;transition:transform 0.2s;flex-shrink:0}
+.pred-card.open .pred-toggle{transform:rotate(180deg)}
+.pred-body{display:none;padding:0 16px 14px;border-top:1px solid var(--b)}
+.pred-card.open .pred-body{display:block}
+.pred-tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:99px;margin:8px 4px 6px 0}
+.pred-why{font-size:11px;color:var(--m);margin-bottom:10px;line-height:1.6}
+
+/* FORMULA SECTIONS */
+.formula-section{margin-bottom:20px}
+.fs-title{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--p);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--b)}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px}
+.formula-card{background:var(--s);border:1px solid var(--b);border-radius:8px;padding:12px}
+.formula-name{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--m);margin-bottom:6px}
+.formula-eq{font-size:12px;color:var(--y);line-height:1.7;font-weight:500}
+.formula-note{font-size:10px;color:var(--m);margin-top:5px;line-height:1.5}
+
+/* TOPIC TABLE */
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{text-align:left;padding:8px 12px;color:var(--m);text-transform:uppercase;letter-spacing:0.08em;font-size:10px;border-bottom:1px solid var(--b);font-weight:400}
+td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;white-space:nowrap}
+.hot{background:rgba(248,113,113,0.15);color:var(--r);border:1px solid rgba(248,113,113,0.25)}
+.warm{background:rgba(251,146,60,0.15);color:var(--o);border:1px solid rgba(251,146,60,0.25)}
+.cold{background:rgba(107,107,133,0.2);color:var(--m);border:1px solid rgba(107,107,133,0.2)}
+.sure{background:rgba(74,222,128,0.12);color:var(--g);border:1px solid rgba(74,222,128,0.2)}
+
+/* TIPS */
+.tips-grid{display:grid;gap:8px}
+.tip-card{background:var(--s);border-left:3px solid var(--p);border-radius:0 8px 8px 0;padding:10px 14px}
+.tip-card.warn{border-color:var(--y)}
+.tip-card.danger{border-color:var(--r)}
+.tip-title{font-size:11px;font-weight:600;margin-bottom:3px;color:var(--t)}
+.tip-body{font-size:11px;color:var(--m);line-height:1.6}
+
+@media(max-width:500px){.formula-grid{grid-template-columns:1fr}.header-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header-row">
+    <div>
+      <h1>T&NM <span>Revision Sheet</span></h1>
+      <div class="subtitle">MA11002 · PYQ Analysis 2023–2025 · Predictions for 2026</div>
+    </div>
+    <div class="exam-pill"><strong>APR 13</strong>Monday · 3–5:30 PM</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="sw('predictions',this)">🎯 Predictions</button>
+    <button class="tab" onclick="sw('formulas',this)">📐 Formulas</button>
+    <button class="tab" onclick="sw('topics',this)">📊 Topic Analysis</button>
+    <button class="tab" onclick="sw('tips',this)">⚡ Exam Tips</button>
+  </div>
+
+  <!-- PREDICTIONS -->
+  <div id="panel-predictions" class="panel active">
+    <p style="font-size:11px;color:var(--m);margin-bottom:14px">Based on PYQ analysis of 2023, 2024 & 2025 papers. % = probability of appearing in 2026.</p>
+    <div class="pred-grid" id="predGrid"></div>
+  </div>
+
+  <!-- FORMULAS -->
+  <div id="panel-formulas" class="panel">
+
+    <div class="formula-section">
+      <div class="fs-title">⚡ Laplace Transforms</div>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="formula-name">Definition</div>
+          <div class="formula-eq">L{f(t)} = ∫₀^∞ e^(-st) f(t) dt</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">First Shifting Theorem</div>
+          <div class="formula-eq">L{e^(at)f(t)} = F(s-a)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Second Shifting (t-shifting)</div>
+          <div class="formula-eq">L{f(t-a)·u(t-a)} = e^(-as)·F(s)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Laplace of Derivatives</div>
+          <div class="formula-eq">L{f'(t)} = sF(s) - f(0)<br>L{f''(t)} = s²F(s) - sf(0) - f'(0)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Convolution Theorem</div>
+          <div class="formula-eq">L{f*g} = F(s)·G(s)<br>(f*g)(t) = ∫₀^t f(τ)g(t-τ)dτ</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Unit Step Function</div>
+          <div class="formula-eq">L{u(t-a)} = e^(-as)/s<br>u(t-a) = 0 if t&lt;a, 1 if t≥a</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Dirac Delta</div>
+          <div class="formula-eq">L{δ(t-a)} = e^(-as)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Key Standard Pairs</div>
+          <div class="formula-eq">L{1}=1/s, L{t^n}=n!/s^(n+1)<br>L{e^(at)}=1/(s-a)<br>L{sin(at)}=a/(s²+a²)<br>L{cos(at)}=s/(s²+a²)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Differentiation of Transform</div>
+          <div class="formula-eq">L{t·f(t)} = -d/ds[F(s)]<br>L{t^n·f(t)} = (-1)^n · F^(n)(s)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Integration of Transform</div>
+          <div class="formula-eq">L{f(t)/t} = ∫_s^∞ F(u)du</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="fs-title">〜 Fourier Series & Transform</div>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="formula-name">Fourier Series (period 2L)</div>
+          <div class="formula-eq">f(x) = a₀/2 + Σ[aₙcos(nπx/L) + bₙsin(nπx/L)]</div>
+          <div class="formula-note">a₀=1/L∫f(x)dx, aₙ=1/L∫f(x)cos(nπx/L)dx<br>bₙ=1/L∫f(x)sin(nπx/L)dx</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Even Function (Cosine Series)</div>
+          <div class="formula-eq">bₙ = 0<br>aₙ = 2/L ∫₀^L f(x)cos(nπx/L)dx</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Odd Function (Sine Series)</div>
+          <div class="formula-eq">aₙ = 0<br>bₙ = 2/L ∫₀^L f(x)sin(nπx/L)dx</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Fourier Transform</div>
+          <div class="formula-eq">F(ω) = ∫_{-∞}^{∞} f(t)e^(-iωt) dt<br>f(t) = 1/2π ∫F(ω)e^(iωt) dω</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Fourier Cosine Transform</div>
+          <div class="formula-eq">Fc(ω) = √(2/π) ∫₀^∞ f(x)cos(ωx)dx</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Fourier Sine Transform</div>
+          <div class="formula-eq">Fs(ω) = √(2/π) ∫₀^∞ f(x)sin(ωx)dx</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Parseval's Identity</div>
+          <div class="formula-eq">∫|f(x)|² dx = 1/2π ∫|F(ω)|² dω</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="fs-title">🔢 Numerical Root Finding</div>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="formula-name">Bisection Method</div>
+          <div class="formula-eq">x_new = (a + b) / 2</div>
+          <div class="formula-note">If f(a)·f(x_new) &lt; 0 → root in [a, x_new] else [x_new, b]</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Newton-Raphson</div>
+          <div class="formula-eq">x_{n+1} = x_n - f(x_n)/f'(x_n)</div>
+          <div class="formula-note">Order of convergence: 2 (quadratic)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Secant Method</div>
+          <div class="formula-eq">x_{n+1} = x_n - f(x_n)·(x_n - x_{n-1}) / (f(x_n) - f(x_{n-1}))</div>
+          <div class="formula-note">Order of convergence: 1.618 (superlinear)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Regula-Falsi</div>
+          <div class="formula-eq">x = [a·f(b) - b·f(a)] / [f(b) - f(a)]</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Fixed Point Iteration</div>
+          <div class="formula-eq">x_{n+1} = g(x_n)<br>Converges if |g'(x)| &lt; 1</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="fs-title">📈 Interpolation</div>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="formula-name">Newton's Forward</div>
+          <div class="formula-eq">f(x) = f(x₀) + p·Δf₀ + p(p-1)/2!·Δ²f₀ + ...</div>
+          <div class="formula-note">p = (x - x₀)/h</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Newton's Backward</div>
+          <div class="formula-eq">f(x) = f(xₙ) + s·∇f_n + s(s+1)/2!·∇²f_n + ...</div>
+          <div class="formula-note">s = (x - xₙ)/h</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Lagrange Interpolation</div>
+          <div class="formula-eq">f(x) = Σ Lₖ(x)·f(xₖ)<br>Lₖ(x) = Π(x-xⱼ)/(xₖ-xⱼ), j≠k</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Divided Difference</div>
+          <div class="formula-eq">f[x₀,x₁] = (f(x₁)-f(x₀))/(x₁-x₀)<br>f[x₀,x₁,x₂] = (f[x₁,x₂]-f[x₀,x₁])/(x₂-x₀)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Forward Difference Operators</div>
+          <div class="formula-eq">Δf(x) = f(x+h) - f(x)<br>∇f(x) = f(x) - f(x-h)<br>δf(x) = f(x+h/2) - f(x-h/2)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="fs-title">∫ Numerical Integration</div>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="formula-name">Trapezoidal Rule</div>
+          <div class="formula-eq">∫ ≈ h/2·[f₀ + 2(f₁+...+f_{n-1}) + fₙ]</div>
+          <div class="formula-note">Error = -h²/12 · (b-a) · f''(ξ)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Simpson's 1/3 Rule</div>
+          <div class="formula-eq">∫ ≈ h/3·[f₀ + 4f₁ + 2f₂ + 4f₃ + ... + fₙ]</div>
+          <div class="formula-note">n must be even. Error ∝ h⁴</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Simpson's 3/8 Rule</div>
+          <div class="formula-eq">∫ ≈ 3h/8·[f₀ + 3f₁ + 3f₂ + 2f₃ + ... + fₙ]</div>
+          <div class="formula-note">n must be multiple of 3</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Gauss-Legendre 2-point</div>
+          <div class="formula-eq">∫₋₁¹ f(x)dx ≈ f(-1/√3) + f(1/√3)</div>
+          <div class="formula-note">Points: ±0.5774, Weights: 1, 1</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Gauss-Legendre 3-point</div>
+          <div class="formula-eq">∫₋₁¹ f(x)dx ≈ 5/9·f(-√(3/5)) + 8/9·f(0) + 5/9·f(√(3/5))</div>
+          <div class="formula-note">Points: 0, ±0.7746 | Weights: 8/9, 5/9, 5/9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="fs-title">🔄 Numerical ODE Methods</div>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="formula-name">Euler's Method</div>
+          <div class="formula-eq">y_{n+1} = yₙ + h·f(xₙ, yₙ)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Modified Euler (Heun's)</div>
+          <div class="formula-eq">y* = yₙ + h·f(xₙ,yₙ)<br>y_{n+1} = yₙ + h/2·[f(xₙ,yₙ) + f(x_{n+1},y*)]</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">RK4 — Full Formula</div>
+          <div class="formula-eq">k₁ = h·f(xₙ, yₙ)<br>k₂ = h·f(xₙ+h/2, yₙ+k₁/2)<br>k₃ = h·f(xₙ+h/2, yₙ+k₂/2)<br>k₄ = h·f(xₙ+h, yₙ+k₃)<br>y_{n+1} = yₙ + 1/6·(k₁+2k₂+2k₃+k₄)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Gauss-Jacobi</div>
+          <div class="formula-eq">x_i^(k+1) = 1/a_ii · [b_i - Σ_{j≠i} a_ij · x_j^(k)]</div>
+          <div class="formula-note">All values from previous iteration used</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Gauss-Seidel</div>
+          <div class="formula-eq">x_i^(k+1) = 1/a_ii · [b_i - Σ_{j&lt;i} a_ij·x_j^(k+1) - Σ_{j>i} a_ij·x_j^(k)]</div>
+          <div class="formula-note">Uses updated values immediately (faster)</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-name">Numerical Differentiation</div>
+          <div class="formula-eq">f'(x) ≈ Δf/h (forward)<br>f''(x) ≈ Δ²f/h²<br>= [f(x+h)-2f(x)+f(x-h)]/h²</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOPIC ANALYSIS -->
+  <div id="panel-topics" class="panel">
+    <p style="font-size:11px;color:var(--m);margin-bottom:14px">Frequency count across 2023, 2024, 2025 papers. 🔥=appeared 3 times, 🌡️=2 times, ❄️=1 time, ⭐=never but likely</p>
+    <table>
+      <thead>
+        <tr><th>Topic</th><th>Unit</th><th>Freq</th><th>Priority</th><th>Expected Marks</th></tr>
+      </thead>
+      <tbody id="topicTable"></tbody>
+    </table>
+  </div>
+
+  <!-- TIPS -->
+  <div id="panel-tips" class="panel">
+    <div class="tips-grid" id="tipsGrid"></div>
+  </div>
+</div>
+
+<script>
+// ── PREDICTIONS DATA ──
+const PREDICTIONS = [
+  { title:'RK4 (Runge-Kutta 4th Order)', pct:95, color:'#f87171',
+    tags:['Numerical ODE','10 marks'],
+    why:'Appeared in ALL 3 PYQs (2023, 2024, 2025). Full numerical question every year. Must do.',
+    points:['Write all 4 k-values clearly','Show y_{n+1} formula','Usually 2 steps required','h is always given']},
+  { title:'Laplace Transform — Solve ODE', pct:92, color:'#f87171',
+    tags:['Laplace','10 marks'],
+    why:'ODE solution using LT appeared in every paper. Typically involves unit step or convolution.',
+    points:['Apply LT both sides','Use partial fractions for inverse','Check initial conditions carefully','Common: y\'\'+ay\'+by=f(t)']},
+  { title:'Newton-Raphson Method', pct:88, color:'#fb923c',
+    tags:['Root Finding','5–8 marks'],
+    why:'Appeared in 2023 and 2025. High-weightage numerical. Very formula-driven.',
+    points:['x_{n+1} = x_n - f(x_n)/f\'(x_n)','Show at least 3 iterations','State convergence order = 2','Check f(a)·f(b)<0 condition']},
+  { title:'Fourier Series (Half-Range / Even-Odd)', pct:85, color:'#fb923c',
+    tags:['Fourier','8–10 marks'],
+    why:'Appeared in 2024 and 2025. Either half-range expansion or finding full Fourier series.',
+    points:['Identify if even/odd first','Half-range cosine: aₙ only','Half-range sine: bₙ only','Use Parseval\'s identity if asked']},
+  { title:'Newton\'s Forward/Backward Interpolation', pct:82, color:'#fb923c',
+    tags:['Interpolation','5–8 marks'],
+    why:'Appeared consistently. Usually find value at a specific x using difference table.',
+    points:['Build difference table first (Δ, Δ², Δ³...)','Forward: use beginning of table','Backward: use end of table','p = (x-x₀)/h']},
+  { title:'Gauss-Seidel / Gauss-Jacobi', pct:78, color:'#fb923c',
+    tags:['Linear Systems','5–8 marks'],
+    why:'Appeared in 2023 and 2024 papers. Iterative methods for solving Ax=b.',
+    points:['Rearrange each equation for diagonal variable','Jacobi: use all old values','Seidel: use new values immediately','Check diagonal dominance']},
+  { title:'Simpson\'s Rule (1/3 or 3/8)', pct:75, color:'#facc15',
+    tags:['Integration','5 marks'],
+    why:'Numerical integration appears every year. Either 1/3 or 3/8 rule.',
+    points:['1/3: coefficients 1,4,2,4,2...4,1','3/8: coefficients 1,3,3,2,3,3...1','n must be even for 1/3','h = (b-a)/n']},
+  { title:'Inverse Laplace Transform', pct:72, color:'#facc15',
+    tags:['Laplace','5 marks'],
+    why:'Often comes as part of ODE solving or as standalone. Partial fractions key.',
+    points:['Partial fraction decomposition','Cover-up method for simple poles','Use convolution for products','Remember: L⁻¹{1/(s²+a²)} = sin(at)/a']},
+  { title:'Lagrange Interpolation', pct:68, color:'#facc15',
+    tags:['Interpolation','5 marks'],
+    why:'Appeared in 2025. Useful when points are not equally spaced.',
+    points:['Write Lₖ(x) formula for each point','Simplify before substituting','Check: Σ Lₖ(x) = 1']},
+  { title:'Convolution Theorem (Laplace)', pct:65, color:'#facc15',
+    tags:['Laplace','5–8 marks'],
+    why:'Appeared in 2024. Used to find inverse LT of product of two transforms.',
+    points:['Identify F(s)·G(s)','Find f(t) and g(t) separately','Compute ∫₀^t f(τ)g(t-τ)dτ']},
+  { title:'Euler\'s / Modified Euler\'s Method', pct:60, color:'#6b6b85',
+    tags:['Numerical ODE','5 marks'],
+    why:'Appeared in 2023. Sometimes asked as comparison with RK4.',
+    points:['Simple: y_{n+1} = yₙ + h·f(xₙ,yₙ)','Modified: predictor-corrector step','Less accurate than RK4']},
+  { title:'Fourier Transform & Inverse', pct:58, color:'#6b6b85',
+    tags:['Fourier','5 marks'],
+    why:'Appeared in 2025. Often involves finding FT of simple functions.',
+    points:['F(ω) = ∫f(t)e^{-iωt}dt','Use standard pairs where possible','Linearity property saves time']},
+  { title:'Gauss-Legendre Integration', pct:50, color:'#6b6b85',
+    tags:['Integration','3–5 marks'],
+    why:'Less frequent but appeared in 2025. Transform limits to [-1,1] first.',
+    points:['Transform: x = (b+a)/2 + (b-a)/2·t','2-point: ±1/√3 with weight 1','3-point: 0, ±√(3/5) with weights 8/9, 5/9']},
+  { title:'Bisection / Regula-Falsi', pct:45, color:'#6b6b85',
+    tags:['Root Finding','3–5 marks'],
+    why:'Simpler methods, sometimes asked for comparison or as short questions.',
+    points:['Bisection: always converges but slow','Regula-Falsi: uses linear interpolation','Both need sign change condition']},
+];
+
+// ── TOPIC TABLE DATA ──
+const TOPICS = [
+  ['RK4 Method','ODE','🔥🔥🔥','🔴 Must Do','10 marks'],
+  ['Laplace — Solve ODE','Laplace','🔥🔥🔥','🔴 Must Do','10 marks'],
+  ['Newton-Raphson','Root Finding','🔥🔥','🟠 High','5-8 marks'],
+  ['Fourier Series (Half-range)','Fourier','🔥🔥','🟠 High','8-10 marks'],
+  ['Newton\'s Interpolation','Interpolation','🔥🔥','🟠 High','5-8 marks'],
+  ['Gauss-Seidel/Jacobi','Linear Systems','🔥🔥','🟠 High','5-8 marks'],
+  ["Simpson's 1/3 or 3/8",'Integration','🔥🔥','🟠 High','5 marks'],
+  ['Inverse Laplace Transform','Laplace','🔥🔥','🟠 High','5 marks'],
+  ['Lagrange Interpolation','Interpolation','🔥','🟡 Medium','5 marks'],
+  ['Convolution Theorem','Laplace','🔥','🟡 Medium','5-8 marks'],
+  ['2nd Shifting Theorem','Laplace','🔥','🟡 Medium','3-5 marks'],
+  ['Fourier Transform','Fourier','🔥','🟡 Medium','5 marks'],
+  ['Euler\'s Method','ODE','🔥','🟡 Medium','5 marks'],
+  ['Trapezoidal Rule','Integration','🔥','🟡 Medium','3-5 marks'],
+  ['Gauss-Legendre','Integration','❄️','🔵 Low','3-5 marks'],
+  ['Bisection Method','Root Finding','❄️','🔵 Low','3-5 marks'],
+  ['Differentiation of LT','Laplace','⭐','🔵 Watch','3 marks'],
+  ['Fourier Cosine/Sine Transform','Fourier','❄️','🔵 Low','3-5 marks'],
+  ['Numerical Differentiation','Diff','❄️','🔵 Low','3-5 marks'],
+  ['Divided Difference','Interpolation','❄️','🔵 Low','3-5 marks'],
+];
+
+// ── TIPS DATA ──
+const TIPS = [
+  {type:'danger',title:'🔥 Focus 60% time on Laplace + RK4',body:'These two topics alone can give you 20-25 marks. Master them completely. RK4 is guaranteed every year.'},
+  {type:'warn',title:'⚠️ Always show working steps',body:'Even if final answer is wrong, step marks are given. Write k₁, k₂, k₃, k₄ separately for RK4. Never skip steps.'},
+  {type:'',title:'📋 Difference Table Trick',body:'For any interpolation question, first build the complete forward difference table. This works for both Newton\'s forward AND backward — just read from top or bottom.'},
+  {type:'warn',title:'⚠️ Partial Fractions — Most common error',body:'For inverse Laplace, partial fractions mistakes kill marks. Watch for repeated roots: use A/(s+a) + B/(s+a)² form.'},
+  {type:'',title:'📐 Gauss-Legendre — Change of limits first!',body:'Always convert ∫_a^b to ∫_{-1}^{1} using: x = (b+a)/2 + (b-a)/2·t. Do this FIRST before applying formula.'},
+  {type:'',title:'🎯 Fourier Series Strategy',body:'Check if function is even or odd FIRST. Even → cosine series (bₙ=0). Odd → sine series (aₙ=0). This halves your work.'},
+  {type:'',title:'📝 Predicted Paper Pattern 2026',body:'Q1: Laplace (ODE solution) ~10m | Q2: Fourier Series ~10m | Q3: Root Finding (N-R) ~8m | Q4: Interpolation ~8m | Q5: RK4 ~10m | Q6: Integration + Linear Systems ~4m each'},
+  {type:'danger',title:'🚫 Don\'t waste time on these',body:'Bisection method (too simple, low marks), Fixed point iteration (rarely full question), Numerical differentiation (formula-based, easy but low frequency).'},
+  {type:'warn',title:'⏱️ Time Management in Exam',body:'Exam is 2.5 hours. Spend max 25min per 10-mark question. Start with what you know best. RK4 + Laplace ODE first = safe 20 marks.'},
+  {type:'',title:'💡 Unit Step Function Shortcut',body:'L{f(t-a)·u(t-a)} = e^{-as}·F(s). Whenever you see u(t-a), the answer always has e^{-as} multiplied. Use this to verify.'},
+];
+
+function sw(name,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  el.classList.add('active');
+}
+
+function togglePred(el){el.closest('.pred-card').classList.toggle('open')}
+
+// Render predictions
+const pg=document.getElementById('predGrid');
+PREDICTIONS.forEach((p,i)=>{
+  const card=document.createElement('div');
+  card.className='pred-card';
+  const fillColor=p.pct>=80?'var(--r)':p.pct>=65?'var(--o)':'var(--m)';
+  const tagsHTML=p.tags.map(t=>`<span class="pred-tag" style="background:${fillColor}22;color:${p.color};border:1px solid ${p.color}44">${t}</span>`).join('');
+  const pointsHTML=p.points.map(pt=>`<div style="padding:3px 0;font-size:11px;color:var(--t)">→ ${pt}</div>`).join('');
+  card.innerHTML=`
+    <div class="pred-header" onclick="togglePred(this)">
+      <div class="chance-bar-wrap">
+        <div class="chance-label">${p.pct}% chance</div>
+        <div class="chance-bar"><div class="chance-fill" style="width:${p.pct}%;background:${fillColor}"></div></div>
+      </div>
+      <div class="pred-title">${p.title}</div>
+      <div class="pred-pct" style="color:${fillColor}">${p.pct}%</div>
+      <div class="pred-toggle">▼</div>
+    </div>
+    <div class="pred-body">
+      ${tagsHTML}
+      <div class="pred-why">${p.why}</div>
+      <div style="border-top:1px solid var(--b);padding-top:8px;margin-top:4px">${pointsHTML}</div>
+    </div>`;
+  pg.appendChild(card);
+});
+
+// Render topic table
+const tt=document.getElementById('topicTable');
+TOPICS.forEach(([topic,unit,freq,priority,marks])=>{
+  const pr=priority.includes('Must')?'hot':priority.includes('High')?'warm':priority.includes('Medium')?'warm cold':'cold';
+  const badgeClass=priority.includes('Must')?'hot':priority.includes('High')?'warm':'cold';
+  tt.innerHTML+=`<tr>
+    <td style="font-weight:500">${topic}</td>
+    <td style="color:var(--m)">${unit}</td>
+    <td style="letter-spacing:0.05em">${freq}</td>
+    <td><span class="badge ${badgeClass}">${priority}</span></td>
+    <td style="color:var(--m)">${marks}</td>
+  </tr>`;
+});
+
+// Render tips
+const tg=document.getElementById('tipsGrid');
+TIPS.forEach(tip=>{
+  tg.innerHTML+=`<div class="tip-card ${tip.type}">
+    <div class="tip-title">${tip.title}</div>
+    <div class="tip-body">${tip.body}</div>
+  </div>`;
+});
+</script>
+</body>
+</html>
