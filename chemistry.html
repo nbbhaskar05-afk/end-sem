@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry CH10001 — Complete Study Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: false }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --surface3: #222230;
+    --border: #2a2a3a;
+    --border2: #333348;
+    --accent1: #ff6a9b;
+    --accent2: #7c6aff;
+    --accent3: #6affcc;
+    --accent4: #ffcc6a;
+    --accent5: #6ab4ff;
+    --accent6: #ff9f6a;
+    --text: #e8e8f0;
+    --text2: #a0a0b8;
+    --muted: #6b6b80;
+    --success: #4ade80;
+    --warning: #facc15;
+    --danger: #f87171;
+
+    /* Unit colours matching studyapp data keys but in chemistry.html palette */
+    --u1: #6affcc;
+    --u2: #6affcc;
+    --u3: #7c6aff;
+    --u4: #ffcc6a;
+    --u5: #6ab4ff;
+
+    --font-mono: 'DM Mono', monospace;
+    --font-display: 'Syne', sans-serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content:''; position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(255,106,155,0.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,106,155,0.03) 1px,transparent 1px);
+    background-size:40px 40px; pointer-events:none; z-index:0;
+  }
+
+  .container { max-width:980px; margin:0 auto; padding:0 20px 80px; position:relative; z-index:1; }
+
+  /* ── HEADER ── */
+  header { padding:40px 0 20px; border-bottom:1px solid var(--border); margin-bottom:32px; }
+  .header-inner { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+  .logo-block h1 { font-family:'Syne',sans-serif; font-size:clamp(1.4rem,3.5vw,2.1rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1; }
+  .logo-block h1 span { color:var(--accent1); }
+  .logo-block p { color:var(--muted); font-size:0.72rem; margin-top:6px; letter-spacing:0.08em; text-transform:uppercase; }
+  .meta-block { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:14px 20px; text-align:right; }
+  .meta-block .big { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--accent1); line-height:1; }
+  .meta-block .lbl { font-size:0.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+  .meta-block .sub { font-size:0.7rem; color:var(--accent3); margin-top:4px; }
+
+  /* ── TABS ── */
+  .tabs { display:flex; gap:8px; margin-bottom:28px; flex-wrap:wrap; }
+  .tab { padding:8px 18px; border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:'DM Mono',monospace; font-size:0.75rem; cursor:pointer; transition:all 0.2s; letter-spacing:0.05em; }
+  .tab:hover { border-color:var(--accent1); color:var(--accent1); }
+  .tab.active { background:var(--accent1); border-color:var(--accent1); color:#fff; }
+
+  /* ── PANELS ── */
+  .panel { display:none; animation:fadeIn 0.25s ease; }
+  .panel.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── STAT CARDS ── */
+  .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:16px; }
+  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+  .stat-card .lbl { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px; }
+  .stat-card .val { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; color:var(--accent1); line-height:1; }
+  .stat-card .sub { font-size:0.65rem; color:var(--muted); margin-top:5px; }
+
+  /* ── RAISED BOXES ── */
+  .raised { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:14px; }
+  .raised h3 { font-family:'Syne',sans-serif; font-size:0.95rem; font-weight:700; margin-bottom:16px; color:var(--text); }
+
+  /* ── BARS ── */
+  .bar-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .bar-row .lbl { min-width:165px; color:var(--muted); font-size:0.68rem; flex-shrink:0; }
+  .bar-wrap { flex:1; background:var(--border); border-radius:4px; height:18px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:4px; display:flex; align-items:center; justify-content:flex-end; padding-right:7px; font-size:0.6rem; font-weight:600; transition:width .5s ease; }
+
+  /* ── TABLE (overview style) ── */
+  table { width:100%; border-collapse:collapse; font-size:0.72rem; }
+  th { text-align:left; padding:8px 10px; font-weight:500; border-bottom:1px solid var(--border); font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; }
+  td { padding:9px 10px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:var(--surface2); }
+
+  /* ── PILLS & BADGES ── */
+  .pill { display:inline-block; padding:3px 9px; border-radius:99px; font-size:0.62rem; font-weight:600; letter-spacing:0.04em; }
+  .pill-hot  { background:rgba(255,106,155,0.18); color:#ff6a9b; border:1px solid rgba(255,106,155,0.3); }
+  .pill-high { background:rgba(255,204,106,0.15); color:#ffcc6a; border:1px solid rgba(255,204,106,0.3); }
+  .pill-med  { background:rgba(106,180,255,0.15); color:#6ab4ff; border:1px solid rgba(106,180,255,0.3); }
+  .pill-u1   { background:rgba(106,255,204,0.12); color:#6affcc; border:1px solid rgba(106,255,204,0.25); }
+  .pill-u2   { background:rgba(106,255,204,0.12); color:#6affcc; border:1px solid rgba(106,255,204,0.25); }
+  .pill-u3   { background:rgba(124,106,255,0.15); color:#7c6aff; border:1px solid rgba(124,106,255,0.3); }
+  .pill-u4   { background:rgba(255,204,106,0.12); color:#ffcc6a; border:1px solid rgba(255,204,106,0.25); }
+  .pill-u5   { background:rgba(106,180,255,0.12); color:#6ab4ff; border:1px solid rgba(106,180,255,0.25); }
+  .pill-marks { background:rgba(106,180,255,0.12); color:#6ab4ff; border:1px solid rgba(106,180,255,0.25); }
+  .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.6rem; background:var(--surface2); color:var(--muted); border:1px solid var(--border); }
+
+  .sec-hdr { font-size:0.6rem; font-weight:600; margin:16px 0 10px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; }
+
+  /* ── HOT ROWS ── */
+  .hot-row { display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.72rem; }
+  .hot-row:last-child { border-bottom:none; }
+  .trend { font-size:0.62rem; padding:3px 8px; border-radius:99px; font-weight:600; white-space:nowrap; }
+  .trend-hot { background:rgba(255,106,155,0.15); color:#ff6a9b; }
+  .trend-med { background:rgba(255,204,106,0.15); color:#ffcc6a; }
+  .trend-up  { background:rgba(106,255,204,0.12); color:#6affcc; }
+
+  /* ── Q-CARDS ── */
+  .q-card { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:10px; }
+  .q-card .q-text { font-size:0.72rem; line-height:1.7; margin-bottom:10px; }
+  .q-card .q-meta { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .q-card strong { color:var(--accent1); }
+
+  /* ── STRATEGY BOXES ── */
+  .strat-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; }
+  .strat-card h3 { font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700; margin-bottom:10px; }
+  .strat-card p { font-size:0.72rem; color:var(--muted); line-height:1.8; }
+  .strat-card .tags { margin-top:12px; display:flex; flex-wrap:wrap; gap:4px; }
+
+  /* ── NUM BOXES ── */
+  .num-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .num-box { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px; font-size:0.7rem; line-height:1.6; }
+  .num-box strong { color:var(--accent3); }
+
+  /* ── DIVIDER ── */
+  .divider { height:1px; background:var(--border); margin: 32px 0; }
+
+  /* ── SECTION TITLE (for study/practice tabs) ── */
+  .sec-title { font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:800; margin-bottom:6px; margin-top:8px; color:var(--text); }
+  .sec-desc { font-size:0.72rem; color:var(--muted); margin-bottom:20px; }
+
+  /* ── FREQUENCY BARS (study tab) ── */
+  .freq-item {
+    display:grid;
+    grid-template-columns: 200px 1fr 60px;
+    align-items:center;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .freq-item .topic { font-size:0.72rem; color:var(--text2); line-height:1.4; }
+  .freq-bar-wrap { background:var(--surface2); border-radius:6px; height:24px; overflow:hidden; border:1px solid var(--border); }
+  .freq-bar {
+    height:100%;
+    border-radius:6px;
+    display:flex; align-items:center; padding-left:10px;
+    font-size:0.62rem; font-weight:700; font-family:'DM Mono',monospace;
+    transition:width 1.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .freq-pct { font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--accent1); text-align:right; }
+
+  /* ── UNIT TABS (inside study panel) ── */
+  .unit-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:24px; }
+  .unit-tab {
+    padding:7px 16px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--muted);
+    font-family:'DM Mono',monospace;
+    font-size:0.68rem;
+    cursor:pointer;
+    transition:all 0.2s;
+    letter-spacing:0.04em;
+  }
+  .unit-tab:hover { border-color:var(--accent1); color:var(--accent1); }
+  .unit-tab.active { border-color:transparent; color:#0a0a0f; }
+  .unit-panel { display:none; }
+  .unit-panel.active { display:block; animation:fadeIn 0.25s; }
+
+  /* ── THEORY CARDS ── */
+  .card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:2px;
+  }
+  .card.u1::before { background:linear-gradient(90deg, var(--u1), transparent); }
+  .card.u2::before { background:linear-gradient(90deg, var(--u2), transparent); }
+  .card.u3::before { background:linear-gradient(90deg, var(--u3), transparent); }
+  .card.u4::before { background:linear-gradient(90deg, var(--u4), transparent); }
+  .card.u5::before { background:linear-gradient(90deg, var(--u5), transparent); }
+  .card h3 { font-family:'Syne',sans-serif; font-size:0.95rem; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .card h4 { font-size:0.78rem; font-weight:600; margin:18px 0 8px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+  .card p { font-size:0.76rem; color:var(--text2); line-height:1.8; margin-bottom:10px; }
+  .card ul { padding-left:18px; }
+  .card ul li { font-size:0.74rem; color:var(--text2); line-height:1.8; margin-bottom:3px; }
+
+  .occ-badge {
+    display:inline-flex; align-items:center; gap:5px;
+    background:rgba(255,106,155,0.1);
+    border:1px solid rgba(255,106,155,0.2);
+    border-radius:99px;
+    padding:3px 10px;
+    font-size:0.62rem;
+    font-family:'DM Mono',monospace;
+    color:var(--accent1);
+    margin-bottom:14px;
+  }
+  .occ-dot { width:6px; height:6px; border-radius:50%; background:var(--accent1); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 18px;
+    margin:12px 0;
+    font-family:'DM Mono',monospace;
+    font-size:0.76rem;
+    color:var(--accent3);
+    line-height:2;
+    overflow-x:auto;
+  }
+  .formula-box .f-label {
+    font-size:0.6rem; color:var(--muted); text-transform:uppercase;
+    letter-spacing:0.1em; margin-bottom:8px; display:block;
+  }
+
+  /* ── NOTE BOX ── */
+  .note-box {
+    background:rgba(255,106,155,0.05);
+    border:1px solid rgba(255,106,155,0.18);
+    border-radius:8px;
+    padding:12px 16px;
+    font-size:0.72rem;
+    color:var(--text2);
+    line-height:1.7;
+    margin:12px 0;
+  }
+  .note-box strong { color:var(--accent1); }
+
+  /* ── HIGHLIGHT ── */
+  .hl  { color:var(--accent1); font-weight:600; }
+  .hl2 { color:var(--accent4); font-weight:600; }
+  .hl3 { color:var(--accent3); font-weight:600; }
+
+  /* ── CHEAT SHEET ── */
+  .cheat-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+  .cheat-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; }
+  .cheat-card .cheat-unit {
+    font-size:0.6rem; font-family:'DM Mono',monospace; text-transform:uppercase;
+    letter-spacing:0.12em; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border);
+  }
+  .cheat-card .formula-row { margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+  .cheat-card .formula-row:last-child { border-bottom:none; margin-bottom:0; }
+  .cheat-card .formula-name { font-size:0.65rem; color:var(--text2); margin-bottom:6px; font-weight:600; }
+  .cheat-card .formula-expr {
+    font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--accent3);
+    background:var(--surface2); padding:8px 12px; border-radius:6px; overflow-x:auto;
+  }
+  .mjx-container { font-size:0.88em !important; }
+
+  /* ── WOODWARD-FIESER TABLE ── */
+  .wf-table { width:100%; border-collapse:collapse; font-size:0.72rem; margin:12px 0; }
+  .wf-table th { padding:8px 12px; text-align:left; background:var(--surface2); color:var(--muted); font-size:0.65rem; text-transform:uppercase; letter-spacing:0.06em; }
+  .wf-table td { padding:8px 12px; border-bottom:1px solid var(--border); }
+  .wf-table tr:last-child td { border-bottom:none; }
+  .wf-table .nm { color:var(--accent4); font-family:'DM Mono',monospace; font-weight:700; }
+
+  /* ── QUIZ ── */
+  .quiz-header {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; padding:22px; margin-bottom:20px;
+  }
+  .quiz-progress-bar { background:var(--surface2); border-radius:99px; height:6px; margin:14px 0 8px; overflow:hidden; }
+  .quiz-progress-fill {
+    height:100%;
+    background:linear-gradient(90deg, var(--accent1), var(--accent2));
+    border-radius:99px;
+    transition:width 0.5s ease;
+  }
+  .quiz-info { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+  .qi-label { font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--muted); }
+  .qi-score { font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--accent3); font-weight:700; }
+  .quiz-unit-badge {
+    display:inline-block; padding:3px 10px; border-radius:4px;
+    font-size:0.62rem; font-family:'DM Mono',monospace;
+    background:var(--surface2); color:var(--muted); border:1px solid var(--border);
+  }
+
+  .question-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; padding:26px; margin-bottom:18px;
+  }
+  .q-number {
+    font-family:'DM Mono',monospace; font-size:0.65rem; color:var(--muted);
+    text-transform:uppercase; letter-spacing:0.12em; margin-bottom:12px;
+  }
+  .q-text-quiz {
+    font-size:0.88rem; line-height:1.75; color:var(--text); font-weight:500; margin-bottom:22px;
+  }
+
+  .options { display:flex; flex-direction:column; gap:10px; }
+  .option {
+    display:flex; align-items:flex-start; gap:14px;
+    padding:13px 16px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface2); cursor:pointer; transition:all 0.2s;
+    font-size:0.78rem; color:var(--muted); line-height:1.6;
+  }
+  .option:hover:not(.locked) { border-color:var(--accent1); color:var(--text); background:rgba(255,106,155,0.05); }
+  .option .opt-letter {
+    width:26px; height:26px; border-radius:6px; border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'DM Mono',monospace; font-size:0.7rem; font-weight:700;
+    flex-shrink:0; transition:all 0.2s;
+  }
+  .option.correct { border-color:var(--accent3); background:rgba(106,255,204,0.07); color:var(--text); }
+  .option.correct .opt-letter { background:var(--accent3); border-color:var(--accent3); color:#0a0a0f; }
+  .option.wrong { border-color:var(--danger); background:rgba(248,113,113,0.06); color:var(--danger); }
+  .option.wrong .opt-letter { background:var(--danger); border-color:var(--danger); color:#0a0a0f; }
+  .option.locked { cursor:default; }
+
+  .feedback-box {
+    display:none; margin-top:18px; padding:14px 18px; border-radius:10px;
+    font-size:0.76rem; line-height:1.7;
+  }
+  .feedback-box.correct { background:rgba(106,255,204,0.08); border:1px solid rgba(106,255,204,0.2); color:var(--accent3); }
+  .feedback-box.wrong { background:rgba(248,113,113,0.07); border:1px solid rgba(248,113,113,0.2); color:var(--danger); }
+  .feedback-box.show { display:block; animation:fadeIn 0.3s; }
+  .feedback-box strong { font-weight:700; display:block; margin-bottom:4px; }
+
+  .quiz-nav { display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap:wrap; }
+  .btn {
+    padding:10px 22px; border-radius:8px; border:none;
+    font-family:'DM Mono',monospace; font-size:0.78rem; font-weight:700;
+    cursor:pointer; transition:all 0.2s; letter-spacing:0.02em;
+  }
+  .btn-primary { background:var(--accent1); color:#0a0a0f; }
+  .btn-primary:hover { filter:brightness(1.1); }
+  .btn-ghost { background:transparent; border:1px solid var(--border); color:var(--muted); }
+  .btn-ghost:hover { border-color:var(--accent1); color:var(--accent1); }
+  .btn:disabled { opacity:0.4; cursor:not-allowed; }
+
+  /* ── RESULT ── */
+  .result-screen {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:18px; padding:48px 36px; text-align:center;
+  }
+  .result-score { font-family:'Syne',sans-serif; font-size:4.5rem; font-weight:800; line-height:1; margin:16px 0; }
+  .result-label { font-size:0.78rem; color:var(--muted); margin-bottom:28px; }
+  .result-bars { text-align:left; max-width:400px; margin:0 auto 28px; }
+  .result-bar-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; font-size:0.72rem; }
+  .result-bar-row span:first-child { min-width:100px; color:var(--muted); font-family:'DM Mono',monospace; }
+  .result-mini-bar { flex:1; background:var(--surface2); border-radius:3px; height:8px; overflow:hidden; border:1px solid var(--border); }
+  .result-mini-fill { height:100%; border-radius:3px; }
+
+  /* ── FILTER CHIPS ── */
+  .filter-chips { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; }
+  .chip {
+    padding:5px 14px; border-radius:99px; border:1px solid var(--border);
+    background:transparent; color:var(--muted); font-size:0.65rem;
+    font-family:'DM Mono',monospace; cursor:pointer; transition:all 0.18s; letter-spacing:0.05em;
+  }
+  .chip:hover { border-color:var(--accent1); color:var(--accent1); }
+  .chip.active { color:#0a0a0f; border-color:transparent; }
+
+  /* ── Q-DOTS ── */
+  .q-dot { width:8px; height:8px; border-radius:50%; background:var(--border); display:inline-block; margin:0 2px; transition:background 0.2s; }
+  .q-dot.done { background:var(--accent3); }
+  .q-dot.current { background:var(--accent1); }
+  .dots-row { display:flex; flex-wrap:wrap; gap:4px; margin-top:12px; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width:4px; height:4px; }
+  ::-webkit-scrollbar-track { background:var(--surface); }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+
+  @media(max-width:640px){
+    .grid4 { grid-template-columns:1fr 1fr; }
+    .grid2, .grid3 { grid-template-columns:1fr; }
+    .num-grid { grid-template-columns:1fr; }
+    .bar-row .lbl { min-width:120px; }
+    .freq-item { grid-template-columns:1fr; gap:4px; }
+    .freq-pct { text-align:left; }
+    .cheat-grid { grid-template-columns:1fr; }
+    .unit-tabs { gap:4px; }
+    .unit-tab { font-size:0.62rem; padding:6px 12px; }
+    .header-inner { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ══════════════════════════════ -->
+<!-- HEADER -->
+<!-- ══════════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <div class="logo-block">
+      <h1>Chemistry <span>CH10001</span></h1>
+      <p>KIIT University · B.Tech · PYQ Analysis + Study Suite · 2021–2025</p>
+    </div>
+    <div class="meta-block">
+      <div class="big">9</div>
+      <div class="lbl">papers analysed</div>
+      <div class="sub">→ 21S 21A 22A 23S 23A 24S 24A 25S 25A</div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════ -->
+<!-- TABS -->
+<!-- ══════════════════════════════ -->
+<div class="tabs">
+  <button class="tab active" onclick="showTab('overview',this)">Overview</button>
+  <button class="tab" onclick="showTab('units',this)">Unit-wise</button>
+  <button class="tab" onclick="showTab('hotq',this)">Hot Questions</button>
+  <button class="tab" onclick="showTab('strategy',this)">Strategy</button>
+  <button class="tab" onclick="showTab('studymode',this)">📚 Study Mode</button>
+  <button class="tab" onclick="showTab('practicemode',this)">🎯 Practice Mode</button>
+</div>
+
+<!-- ══════════ OVERVIEW ══════════ -->
+<div id="overview" class="panel active">
+
+  <div class="grid4">
+    <div class="stat-card">
+      <div class="lbl">Papers Analysed</div>
+      <div class="val">9</div>
+      <div class="sub">2021 – 2025</div>
+    </div>
+    <div class="stat-card">
+      <div class="lbl">Total Units</div>
+      <div class="val" style="color:var(--accent2)">5</div>
+      <div class="sub">Thermo · Kinetics · Spectro · Electro · Smart</div>
+    </div>
+    <div class="stat-card">
+      <div class="lbl">Highest Weight</div>
+      <div class="val" style="color:var(--accent3)">III</div>
+      <div class="sub">Organic Spectroscopy</div>
+    </div>
+    <div class="stat-card">
+      <div class="lbl">Most Repeated</div>
+      <div class="val" style="font-size:1rem;padding-top:6px;color:var(--accent4)">W-F Rules</div>
+      <div class="sub">All 9 papers</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="raised">
+      <h3>Marks distribution by unit</h3>
+      <div class="bar-row"><div class="lbl">Unit I · Thermodynamics</div><div class="bar-wrap"><div class="bar-fill" style="width:22%;background:rgba(106,255,204,0.6);color:#0a0a0f">22%</div></div></div>
+      <div class="bar-row"><div class="lbl">Unit II · Kinetics</div><div class="bar-wrap"><div class="bar-fill" style="width:20%;background:rgba(106,255,204,0.6);color:#0a0a0f">20%</div></div></div>
+      <div class="bar-row"><div class="lbl">Unit III · Spectroscopy</div><div class="bar-wrap"><div class="bar-fill" style="width:28%;background:rgba(124,106,255,0.8);color:#fff">28%</div></div></div>
+      <div class="bar-row"><div class="lbl">Unit IV · Electrochemistry</div><div class="bar-wrap"><div class="bar-fill" style="width:22%;background:rgba(255,204,106,0.7);color:#0a0a0f">22%</div></div></div>
+      <div class="bar-row"><div class="lbl">Unit V · Smart Materials</div><div class="bar-wrap"><div class="bar-fill" style="width:8%;background:rgba(106,180,255,0.6);color:#0a0a0f">8%</div></div></div>
+    </div>
+
+    <div class="raised">
+      <h3>Question type distribution</h3>
+      <div class="bar-row"><div class="lbl">Numerical problem</div><div class="bar-wrap"><div class="bar-fill" style="width:38%;background:var(--accent1);color:#fff">38%</div></div></div>
+      <div class="bar-row"><div class="lbl">Derivation / Proof</div><div class="bar-wrap"><div class="bar-fill" style="width:30%;background:rgba(255,106,155,0.5);color:#fff">30%</div></div></div>
+      <div class="bar-row"><div class="lbl">Short answer (1 mark)</div><div class="bar-wrap"><div class="bar-fill" style="width:20%;background:var(--surface2);color:var(--muted)">20%</div></div></div>
+      <div class="bar-row"><div class="lbl">Explain / Discuss</div><div class="bar-wrap"><div class="bar-fill" style="width:12%;background:var(--surface2);color:var(--muted)">12%</div></div></div>
+    </div>
+  </div>
+
+  <div class="raised">
+    <h3>Topic frequency across 9 papers</h3>
+    <table>
+      <thead><tr><th>Topic</th><th>Unit</th><th>Appeared in</th><th>Freq</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>Woodward-Fieser rules (λmax calculation)</td><td><span class="pill pill-u3">III</span></td><td>9/9</td><td>●●●●●</td><td><span class="pill pill-hot">Must do</span></td></tr>
+        <tr><td>Nernst equation &amp; applications</td><td><span class="pill pill-u4">IV</span></td><td>9/9</td><td>●●●●●</td><td><span class="pill pill-hot">Must do</span></td></tr>
+        <tr><td>Michaelis-Menten enzyme kinetics</td><td><span class="pill pill-u2">II</span></td><td>8/9</td><td>●●●●●</td><td><span class="pill pill-hot">Must do</span></td></tr>
+        <tr><td>NMR – chemical shift, spin-spin coupling</td><td><span class="pill pill-u3">III</span></td><td>8/9</td><td>●●●●●</td><td><span class="pill pill-hot">Must do</span></td></tr>
+        <tr><td>Entropy &amp; Gibbs free energy numericals</td><td><span class="pill pill-u1">I</span></td><td>8/9</td><td>●●●●○</td><td><span class="pill pill-hot">Must do</span></td></tr>
+        <tr><td>Smart materials (piezo + SMA)</td><td><span class="pill pill-u5">V</span></td><td>8/9</td><td>●●●●○</td><td><span class="pill pill-hot">Must do</span></td></tr>
+        <tr><td>IR spectroscopy – Hooke's law + ViDOF</td><td><span class="pill pill-u3">III</span></td><td>7/9</td><td>●●●●○</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Consecutive reactions A→B→C</td><td><span class="pill pill-u2">II</span></td><td>7/9</td><td>●●●●○</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Fuel cells (SOFC, AFC, PEMFC)</td><td><span class="pill pill-u4">IV</span></td><td>7/9</td><td>●●●●○</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Gibbs-Helmholtz equation derivation</td><td><span class="pill pill-u1">I</span></td><td>6/9</td><td>●●●○○</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Structural elucidation (IR+NMR+UV)</td><td><span class="pill pill-u3">III</span></td><td>6/9</td><td>●●●○○</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>pH determination (glass electrode / SCE)</td><td><span class="pill pill-u4">IV</span></td><td>6/9</td><td>●●●○○</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Arrhenius equation &amp; activation energy</td><td><span class="pill pill-u2">II</span></td><td>6/9</td><td>●●●○○</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Beer-Lambert law (UV-Vis)</td><td><span class="pill pill-u3">III</span></td><td>6/9</td><td>●●●○○</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Clausius-Clapeyron equation</td><td><span class="pill pill-u1">I</span></td><td>5/9</td><td>●●○○○</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>Li-ion battery mechanism</td><td><span class="pill pill-u4">IV</span></td><td>5/9</td><td>●●○○○</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>Van't Hoff isotherm/isochore</td><td><span class="pill pill-u1">I</span></td><td>5/9</td><td>●●○○○</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>Parallel reactions – rate constants</td><td><span class="pill pill-u2">II</span></td><td>5/9</td><td>●●○○○</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>Vibrational degrees of freedom</td><td><span class="pill pill-u3">III</span></td><td>5/9</td><td>●●○○○</td><td><span class="pill pill-med">Medium</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ══════════ UNIT-WISE ══════════ -->
+<div id="units" class="panel">
+
+  <div class="raised" style="border-left:3px solid #6affcc">
+    <h3>Unit I — Thermodynamics <span class="pill pill-u1" style="float:right">~20–22 marks</span></h3>
+    <div class="sec-hdr">Most asked topics</div>
+    <div class="hot-row"><span>Entropy calculations (ΔSmix, phase change, isothermal)</span><span class="trend trend-hot">8/9 papers</span></div>
+    <div class="hot-row"><span>Gibbs free energy — spontaneity, ΔG = ΔH – TΔS</span><span class="trend trend-hot">8/9 papers</span></div>
+    <div class="hot-row"><span>Gibbs-Helmholtz equation derivation</span><span class="trend trend-med">6/9 papers</span></div>
+    <div class="hot-row"><span>Clausius-Clapeyron — derivation &amp; application</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="hot-row"><span>Van't Hoff isotherm and isochore</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="hot-row"><span>Helmholtz function (A) and maximum work</span><span class="trend trend-up">4/9 papers</span></div>
+    <div class="hot-row"><span>Chemical potential, Gibbs-Duhem equation</span><span class="trend trend-up">4/9 papers</span></div>
+    <div class="sec-hdr">Key formulae tested</div>
+    <p style="font-size:0.7rem;color:var(--muted);line-height:1.9">ΔG = ΔH – TΔS &nbsp;·&nbsp; ΔG = ΔG° + RT ln Q &nbsp;·&nbsp; (∂G/∂T)P = –S &nbsp;·&nbsp; (∂G/∂P)T = V &nbsp;·&nbsp; Gibbs-Helmholtz: [∂(ΔG/T)/∂T]P = –ΔH/T² &nbsp;·&nbsp; Clausius-Clapeyron: dP/dT = ΔHvap/(TΔV) &nbsp;·&nbsp; Σni·dμi = 0</p>
+  </div>
+
+  <div class="raised" style="border-left:3px solid #6affcc">
+    <h3>Unit II — Chemical Kinetics <span class="pill pill-u2" style="float:right">~18–20 marks</span></h3>
+    <div class="sec-hdr">Most asked topics</div>
+    <div class="hot-row"><span>Michaelis-Menten enzyme kinetics + Lineweaver-Burk</span><span class="trend trend-hot">8/9 papers</span></div>
+    <div class="hot-row"><span>Consecutive reaction A→B→C (derivation + graph)</span><span class="trend trend-hot">7/9 papers</span></div>
+    <div class="hot-row"><span>Activation energy via Arrhenius equation</span><span class="trend trend-hot">6/9 papers</span></div>
+    <div class="hot-row"><span>Parallel reactions — rate constants &amp; product ratio</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="hot-row"><span>Steady state approximation (multi-step mechanisms)</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="hot-row"><span>Opposing reactions (equilibrium from kinetics)</span><span class="trend trend-up">4/9 papers</span></div>
+    <div class="hot-row"><span>Lindemann's theory / Absolute reaction rate theory</span><span class="trend trend-up">3/9 papers</span></div>
+    <div class="sec-hdr">Numerical types</div>
+    <p style="font-size:0.7rem;color:var(--muted);line-height:1.9">Rate constant from Arrhenius &nbsp;·&nbsp; Half-life calculations &nbsp;·&nbsp; R/Rmax from Michaelis constant &nbsp;·&nbsp; tmax for consecutive reaction &nbsp;·&nbsp; k1/k2 from temperature doubling rule &nbsp;·&nbsp; Collision frequency &amp; steric factor</p>
+  </div>
+
+  <div class="raised" style="border-left:3px solid #7c6aff">
+    <h3>Unit III — Organic Spectroscopy <span class="pill pill-u3" style="float:right">Highest weight · ~25–28%</span></h3>
+    <div class="sec-hdr">Most asked topics</div>
+    <div class="hot-row"><span>Woodward-Fieser rules for λmax (conjugated dienes)</span><span class="trend trend-hot">9/9 papers</span></div>
+    <div class="hot-row"><span>NMR — spin-spin coupling, n+1 rule, splitting patterns</span><span class="trend trend-hot">8/9 papers</span></div>
+    <div class="hot-row"><span>IR — Hooke's law, stretching frequency calculation</span><span class="trend trend-hot">7/9 papers</span></div>
+    <div class="hot-row"><span>Structural elucidation (IR + NMR + UV combined)</span><span class="trend trend-hot">6/9 papers</span></div>
+    <div class="hot-row"><span>Beer-Lambert's law &amp; molar extinction coefficient</span><span class="trend trend-med">6/9 papers</span></div>
+    <div class="hot-row"><span>Vibrational degrees of freedom (3N-5 / 3N-6)</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="hot-row"><span>Chemical shift, shielding/deshielding, magneto-anisotropic effect</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="sec-hdr">Woodward-Fieser base values — memorise</div>
+    <p style="font-size:0.7rem;color:var(--muted);line-height:1.9">Acyclic diene: <span style="color:var(--accent3)">217 nm</span> &nbsp;·&nbsp; Homoannular: <span style="color:var(--accent3)">253 nm</span> &nbsp;·&nbsp; Heteroannular: <span style="color:var(--accent3)">214 nm</span> &nbsp;·&nbsp; +30 nm (ring residue) &nbsp;·&nbsp; +39 nm (exo double bond) &nbsp;·&nbsp; +5 nm (extending conjugation) &nbsp;·&nbsp; +5 nm (each alkyl substituent)</p>
+  </div>
+
+  <div class="raised" style="border-left:3px solid #ffcc6a">
+    <h3>Unit IV — Electrochemical Energy Systems <span class="pill pill-u4" style="float:right">~20–22 marks</span></h3>
+    <div class="sec-hdr">Most asked topics</div>
+    <div class="hot-row"><span>Nernst equation — electrode/cell potential, equilibrium K</span><span class="trend trend-hot">9/9 papers</span></div>
+    <div class="hot-row"><span>Fuel cells — SOFC, PEMFC, H2-O2, AFC</span><span class="trend trend-hot">7/9 papers</span></div>
+    <div class="hot-row"><span>pH determination (glass electrode, quinhydrone, SCE)</span><span class="trend trend-hot">6/9 papers</span></div>
+    <div class="hot-row"><span>Lithium-ion battery mechanism</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="hot-row"><span>Gibbs free energy from cell potential (ΔG = –nFE)</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="hot-row"><span>Solubility product from Nernst equation</span><span class="trend trend-med">4/9 papers</span></div>
+    <div class="hot-row"><span>Zn-air / Ni-MH battery working</span><span class="trend trend-up">3/9 papers</span></div>
+    <div class="sec-hdr">Key equations</div>
+    <p style="font-size:0.7rem;color:var(--muted);line-height:1.9">E = E° – (RT/nF)ln Q &nbsp;·&nbsp; ΔG° = –nFE° &nbsp;·&nbsp; K = e^(nFE°/RT) &nbsp;·&nbsp; Ecell = Ecathode – Eanode &nbsp;·&nbsp; pH from H-electrode: pH = (E – Eref)/0.0591</p>
+  </div>
+
+  <div class="raised" style="border-left:3px solid #6ab4ff">
+    <h3>Unit V — Smart &amp; Intelligent Materials <span class="pill pill-u5" style="float:right">Short but always asked</span></h3>
+    <div class="sec-hdr">Most asked topics</div>
+    <div class="hot-row"><span>Piezoelectric materials — mechanism, examples (PZT, quartz)</span><span class="trend trend-hot">8/9 papers</span></div>
+    <div class="hot-row"><span>Shape memory alloys — definition, mechanism, naming</span><span class="trend trend-hot">7/9 papers</span></div>
+    <div class="hot-row"><span>Active vs passive smart materials</span><span class="trend trend-med">6/9 papers</span></div>
+    <div class="hot-row"><span>Applications of smart materials in engineering</span><span class="trend trend-med">5/9 papers</span></div>
+    <div class="sec-hdr">Quick revision points</div>
+    <p style="font-size:0.7rem;color:var(--muted);line-height:1.9">Piezoelectric: direct effect (pressure→voltage), converse effect (voltage→deformation) &nbsp;·&nbsp; SMA: thermoelastic martensite transformation, Nitinol (Ni-Ti) &nbsp;·&nbsp; Active: responds without external energy &nbsp;·&nbsp; Passive: needs external energy</p>
+  </div>
+</div>
+
+<!-- ══════════ HOT QUESTIONS ══════════ -->
+<div id="hotq" class="panel">
+
+  <div class="raised">
+    <h3>Guaranteed — appeared in 7+ of 9 papers</h3>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Woodward-Fieser rule:</strong> Calculate λmax for 2–3 given conjugated diene structures. Apply base value + substituent corrections. Sometimes asked as a "which has higher λmax?" comparison.</div>
+      <div class="q-meta"><span class="pill pill-hot">9/9 papers</span><span class="pill pill-u3">Unit III</span><span class="pill pill-marks">5 marks</span><span class="tag">Numerical</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Nernst equation:</strong> Calculate Ecell, equilibrium constant K, or ΔG for a given electrochemical cell. Typical data: E° values + ion concentrations.</div>
+      <div class="q-meta"><span class="pill pill-hot">9/9 papers</span><span class="pill pill-u4">Unit IV</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Numerical</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Michaelis-Menten mechanism:</strong> Derive rate expression for enzyme catalysis. Calculate R/Rmax given KM = 0.5 mM and [S] = 1.0 mM — same values appeared in 5 papers.</div>
+      <div class="q-meta"><span class="pill pill-hot">8/9 papers</span><span class="pill pill-u2">Unit II</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Derivation + Numerical</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>NMR spectroscopy:</strong> Identify number of signals and splitting patterns for given organic molecules. Also: chemical shift, shielding/deshielding, magneto-anisotropic effect of C=C and C=O.</div>
+      <div class="q-meta"><span class="pill pill-hot">8/9 papers</span><span class="pill pill-u3">Unit III</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Theory + Application</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Smart materials:</strong> Piezoelectric mechanism + SMA definition. Active vs passive classification. At least one application. Easy theory marks — never skip.</div>
+      <div class="q-meta"><span class="pill pill-hot">8/9 papers</span><span class="pill pill-u5">Unit V</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Theory</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Entropy calculations:</strong> Entropy of mixing ideal gases, entropy change in phase transitions (condensation, vaporisation, fusion). Given ΔH and T — plug-and-chug numerical.</div>
+      <div class="q-meta"><span class="pill pill-hot">8/9 papers</span><span class="pill pill-u1">Unit I</span><span class="pill pill-marks">1–4 marks</span><span class="tag">Numerical</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Consecutive reaction A→B→C:</strong> Given rate expressions, simplify for k1 >> k2. Plot concentration vs time for A, B, C. Derive tmax for intermediate B = ln(k2/k1)/(k2–k1).</div>
+      <div class="q-meta"><span class="pill pill-high">7/9 papers</span><span class="pill pill-u2">Unit II</span><span class="pill pill-marks">4 marks</span><span class="tag">Derivation</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Fuel cells:</strong> Working principle of SOFC or H2-O2 AFC. Electrode reactions, electrolyte used (YSZ for SOFC). Compare advantages over thermal power plants. Calculate efficiency = ΔG/ΔH × 100.</div>
+      <div class="q-meta"><span class="pill pill-high">7/9 papers</span><span class="pill pill-u4">Unit IV</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Theory + Numerical</span></div>
+    </div>
+  </div>
+
+  <div class="raised">
+    <h3>High probability — appeared in 5–6 papers</h3>
+
+    <div class="q-card">
+      <div class="q-text"><strong>IR spectroscopy:</strong> Calculate stretching frequency using Hooke's law ν̃ = (1/2πc)√(k/μ). Identify functional groups. Vibrational degrees of freedom: linear 3N-5, non-linear 3N-6.</div>
+      <div class="q-meta"><span class="pill pill-high">7/9 papers</span><span class="pill pill-u3">Unit III</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Numerical</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Structural elucidation:</strong> Compound C₂H₄O or C₂H₇N — identify using combined IR, NMR, UV-Vis data. Acetaldehyde (C₂H₄O) appeared in 4 papers.</div>
+      <div class="q-meta"><span class="pill pill-high">6/9 papers</span><span class="pill pill-u3">Unit III</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Application</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Clausius-Clapeyron equation:</strong> Derive integrated form. Apply to find boiling point at different pressures. Or explain why cooking takes longer at high altitude.</div>
+      <div class="q-meta"><span class="pill pill-high">5/9 papers</span><span class="pill pill-u1">Unit I</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Derivation + Numerical</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>pH determination:</strong> Glass electrode + SCE or quinhydrone + SCE cell. Construct cell, derive mathematical expression, calculate pH from given Ecell.</div>
+      <div class="q-meta"><span class="pill pill-high">6/9 papers</span><span class="pill pill-u4">Unit IV</span><span class="pill pill-marks">5 marks</span><span class="tag">Derivation + Numerical</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Gibbs-Helmholtz equation:</strong> Prove [∂(ΔG/T)/∂T]P = –ΔH/T². Show –ΔGp,T = maximum non-expansion work.</div>
+      <div class="q-meta"><span class="pill pill-high">6/9 papers</span><span class="pill pill-u1">Unit I</span><span class="pill pill-marks">4 marks</span><span class="tag">Derivation</span></div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-text"><strong>Van't Hoff isochore:</strong> Derive relation. Plot ln(K) vs 1/T for exothermic and endothermic reactions. Calculate ΔH° given K₁=18.5 at 925K, K₂=9.25 at 1000K — same values in 3 papers.</div>
+      <div class="q-meta"><span class="pill pill-high">5/9 papers</span><span class="pill pill-u1">Unit I</span><span class="pill pill-marks">4–5 marks</span><span class="tag">Derivation + Numerical</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ STRATEGY ══════════ -->
+<div id="strategy" class="panel">
+
+  <div class="grid3">
+    <div class="strat-card" style="border-top:3px solid var(--accent3)">
+      <h3 style="color:var(--accent3)">Section A <span style="font-size:0.72rem;font-weight:400;color:var(--muted)">(10 × 1 mark)</span></h3>
+      <p>All 10 compulsory. Short definitions, 1-step numericals, concept ID. Focus: unit definitions, formulae recall, functional group ID, battery chemistry one-liners, smart material definitions.</p>
+      <div class="tags">
+        <span class="tag">Entropy formula</span><span class="tag">Arrhenius log form</span><span class="tag">Beer-Lambert</span><span class="tag">Nernst equation</span><span class="tag">NMR signal count</span><span class="tag">ViDOF formula</span><span class="tag">SMA definition</span>
+      </div>
+    </div>
+
+    <div class="strat-card" style="border-top:3px solid var(--accent2)">
+      <h3 style="color:var(--accent2)">Section B <span style="font-size:0.72rem;font-weight:400;color:var(--muted)">(attempt 4 of 5–6)</span></h3>
+      <p>Each question is 5 marks. Choose questions across different units to maximise coverage. Always attempt spectroscopy (Woodward-Fieser + IR numerical — guaranteed marks). Michaelis-Menten derivation repeats every year.</p>
+      <div class="tags">
+        <span class="tag">Woodward-Fieser Q</span><span class="tag">Michaelis-Menten Q</span><span class="tag">Nernst + fuel cell Q</span><span class="tag">Clausius-Clapeyron Q</span>
+      </div>
+    </div>
+
+    <div class="strat-card" style="border-top:3px solid var(--accent4)">
+      <h3 style="color:var(--accent4)">Time Allocation <span style="font-size:0.72rem;font-weight:400;color:var(--muted)">(2.5 hrs)</span></h3>
+      <p>Section A: 20–25 mins (read all, attempt all). Section B: ~20 mins per question × 4 = 80 mins. Buffer/revision: 25 mins. Prioritise numericals first — partial marks are awarded.</p>
+      <div style="margin-top:12px;font-size:0.68rem;color:var(--muted);line-height:2">
+        Sec A: 20 min &nbsp;·&nbsp; Q1: 20 min &nbsp;·&nbsp; Q2: 20 min &nbsp;·&nbsp; Q3: 20 min &nbsp;·&nbsp; Q4: 20 min &nbsp;·&nbsp; Buffer: 25 min
+      </div>
+    </div>
+  </div>
+
+  <div class="raised">
+    <h3>Minimum prep checklist — scoring 40+/50</h3>
+    <table>
+      <thead><tr><th>Topic</th><th>What to prepare</th><th>Expected</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--accent1)">Woodward-Fieser rules</td><td>Memorise base values (acyclic 217, homoannular 253) + all increments. Practise 5+ PYQ problems.</td><td><span class="pill pill-hot">5 marks guaranteed</span></td></tr>
+        <tr><td style="color:var(--accent1)">Michaelis-Menten</td><td>Full derivation + Lineweaver-Burk. Calculate R/Rmax. KM = 0.5mM, [S] = 1mM → R/Rmax = 0.67</td><td><span class="pill pill-hot">5 marks guaranteed</span></td></tr>
+        <tr><td style="color:var(--accent1)">Nernst equation</td><td>Formula, applications for Ecell, K, solubility product, pH. Solve at least 10 PYQ numericals.</td><td><span class="pill pill-hot">5 marks guaranteed</span></td></tr>
+        <tr><td style="color:var(--accent3)">IR Hooke's law</td><td>ν̃ = (1/2πc)√(k/μ) · Practice force constant problems. Know μ (reduced mass) calculation.</td><td><span class="pill pill-high">4–5 marks</span></td></tr>
+        <tr><td style="color:var(--accent3)">Smart materials</td><td>Piezoelectric mechanism, SMA (Nitinol), active vs passive. 2–3 applications each. Easy marks.</td><td><span class="pill pill-high">4–5 marks</span></td></tr>
+        <tr><td style="color:var(--accent3)">Entropy calculations</td><td>ΔSmix = –nR Σxi ln xi &nbsp;·&nbsp; Phase change ΔS = ΔH/T &nbsp;·&nbsp; Isothermal expansion ΔS = nR ln(V2/V1)</td><td><span class="pill pill-high">3–4 marks Sec A</span></td></tr>
+        <tr><td style="color:var(--accent5)">Consecutive reactions</td><td>Derive A→B→C expressions. Know tmax = ln(k2/k1)/(k2–k1). Simplify for k1 >> k2.</td><td><span class="pill pill-med">4 marks</span></td></tr>
+        <tr><td style="color:var(--accent5)">Fuel cells</td><td>SOFC electrode reactions + electrolyte (YSZ). H2-O2 AFC. Calculate efficiency = ΔG/ΔH × 100.</td><td><span class="pill pill-med">4–5 marks</span></td></tr>
+        <tr><td style="color:var(--accent5)">Structural elucidation</td><td>Acetaldehyde C₂H₄O: IR 1710 cm⁻¹ + 2700/2800 (CHO) &nbsp;·&nbsp; UV: 190nm (π→π*) + 290nm (n→π*) &nbsp;·&nbsp; NMR: quartet ~9ppm, doublet ~2ppm</td><td><span class="pill pill-med">4–5 marks</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="raised">
+    <h3>Recurring numerical values — memorise the answers</h3>
+    <div class="num-grid">
+      <div class="num-box">KM = 0.5 mM, [S] = 1.0 mM → <strong>R/Rmax = 0.667 (= 2/3)</strong></div>
+      <div class="num-box">K₁ = 18.5 at 925K, K₂ = 9.25 at 1000K → <strong>ΔH° ≈ –24.7 kJ/mol</strong></div>
+      <div class="num-box">log k = 14.34 – 1.25×10⁴/T → <strong>Ea = 1.25×10⁴ × 2.303R ≈ 239.3 kJ/mol</strong></div>
+      <div class="num-box">Entropy of mixing 100g O₂ with 60g N₂ → <strong>ΔSmix ≈ 16.8 J/K</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- STUDY MODE (new from studyapp) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="studymode" class="panel">
+
+  <!-- FREQUENCY BARS -->
+  <div style="margin-bottom:32px;">
+    <div class="sec-title">Topic Occurrence Probability</div>
+    <p class="sec-desc">Frequency analysis across 9 previous year papers (2021–2025). Bar width = probability of appearing in exam.</p>
+    <div id="freq-bars"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- THEORY GUIDE -->
+  <div class="sec-title">Theory &amp; Concept Guide</div>
+  <p class="sec-desc">Select a unit to view in-depth theory summaries tailored for B.Tech 2nd Semester with LaTeX formulas.</p>
+
+  <div class="unit-tabs">
+    <button class="unit-tab active" style="background:var(--u1);color:#0a0a0f;" onclick="showUnit(0,this)">Unit I · Thermodynamics</button>
+    <button class="unit-tab" onclick="showUnit(1,this)">Unit II · Kinetics</button>
+    <button class="unit-tab" onclick="showUnit(2,this)">Unit III · Spectroscopy</button>
+    <button class="unit-tab" onclick="showUnit(3,this)">Unit IV · Electrochemistry</button>
+    <button class="unit-tab" onclick="showUnit(4,this)">Unit V · Smart Materials</button>
+  </div>
+
+  <div id="unit-0" class="unit-panel active"></div>
+  <div id="unit-1" class="unit-panel"></div>
+  <div id="unit-2" class="unit-panel"></div>
+  <div id="unit-3" class="unit-panel"></div>
+  <div id="unit-4" class="unit-panel"></div>
+
+  <div class="divider"></div>
+
+  <!-- FORMULA CHEAT SHEET -->
+  <div class="sec-title">Formula Cheat Sheet</div>
+  <p class="sec-desc">All key mathematical formulas for quick reference. Memorise these for numerical questions.</p>
+  <div id="formula-sheet"></div>
+
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PRACTICE MODE (new from studyapp) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="practicemode" class="panel">
+
+  <div class="quiz-header">
+    <div class="quiz-info">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;">Practice Quiz</div>
+        <div class="qi-label" style="margin-top:4px;">30 questions · MCQ · Based on PYQ frequency analysis</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="qi-score" id="score-display">Score: 0 / 0</div>
+        <div class="qi-label" id="q-counter">Question 1 of 30</div>
+      </div>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress" style="width:3.33%"></div></div>
+    <div class="dots-row" id="dots-row"></div>
+  </div>
+
+  <div class="filter-chips">
+    <button class="chip active" onclick="filterQuiz('all',this)" style="background:var(--accent1);border-color:var(--accent1);color:#0a0a0f;">All Units</button>
+    <button class="chip" onclick="filterQuiz('u1',this)">Unit I</button>
+    <button class="chip" onclick="filterQuiz('u2',this)">Unit II</button>
+    <button class="chip" onclick="filterQuiz('u3',this)">Unit III</button>
+    <button class="chip" onclick="filterQuiz('u4',this)">Unit IV</button>
+    <button class="chip" onclick="filterQuiz('u5',this)">Unit V</button>
+  </div>
+
+  <div id="quiz-area"></div>
+  <div id="result-screen" style="display:none;"></div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ════════════════════════════════════════════
+// TAB SWITCHING
+// ════════════════════════════════════════════
+function showTab(id, el){
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  if(id === 'practicemode') {
+    setTimeout(()=>{ if(window.MathJax) MathJax.typesetPromise(); }, 200);
+  }
+  if(id === 'studymode') {
+    setTimeout(()=>{ if(window.MathJax) MathJax.typesetPromise(); }, 300);
+  }
+}
+
+// ════════════════════════════════════════════
+// FREQUENCY DATA
+// ════════════════════════════════════════════
+const FREQ_DATA = [
+  { topic: "Woodward-Fieser rules (λmax)", unit:"III", papers:9, pct:100 },
+  { topic: "Nernst equation & applications", unit:"IV", papers:9, pct:100 },
+  { topic: "Michaelis-Menten kinetics", unit:"II", papers:8, pct:89 },
+  { topic: "NMR – chemical shift, coupling", unit:"III", papers:8, pct:89 },
+  { topic: "Entropy & Gibbs free energy", unit:"I", papers:8, pct:89 },
+  { topic: "Smart materials (piezo, SMA)", unit:"V", papers:8, pct:89 },
+  { topic: "IR spectroscopy – Hooke's law", unit:"III", papers:7, pct:78 },
+  { topic: "Consecutive reactions A→B→C", unit:"II", papers:7, pct:78 },
+  { topic: "Fuel cells (SOFC/AFC/PEMFC)", unit:"IV", papers:7, pct:78 },
+  { topic: "Gibbs-Helmholtz equation", unit:"I", papers:6, pct:67 },
+  { topic: "Structural elucidation (IR+NMR+UV)", unit:"III", papers:6, pct:67 },
+  { topic: "pH determination (glass electrode)", unit:"IV", papers:6, pct:67 },
+  { topic: "Arrhenius equation & Ea", unit:"II", papers:6, pct:67 },
+  { topic: "Beer-Lambert law (UV-Vis)", unit:"III", papers:6, pct:67 },
+  { topic: "Clausius-Clapeyron equation", unit:"I", papers:5, pct:56 },
+  { topic: "Li-ion battery mechanism", unit:"IV", papers:5, pct:56 },
+  { topic: "Van't Hoff isotherm/isochore", unit:"I", papers:5, pct:56 },
+  { topic: "Parallel reactions – rate constants", unit:"II", papers:5, pct:56 },
+  { topic: "Vibrational degrees of freedom", unit:"III", papers:5, pct:56 },
+];
+
+const UNIT_COLORS = ["var(--u1)","var(--u2)","var(--u3)","var(--u4)","var(--u5)"];
+const UNIT_NAMES = ["Unit I","Unit II","Unit III","Unit IV","Unit V"];
+
+function buildFreqBars() {
+  const unitColorMap = {
+    'I':'var(--u1)', 'II':'var(--u2)', 'III':'var(--u3)', 'IV':'var(--u4)', 'V':'var(--u5)'
+  };
+  const container = document.getElementById('freq-bars');
+  const sorted = [...FREQ_DATA].sort((a,b)=>b.pct-a.pct);
+  let html = '';
+  sorted.forEach(item => {
+    const col = unitColorMap[item.unit] || 'var(--accent1)';
+    const brightness = item.pct >= 89 ? '0.9' : item.pct >= 70 ? '0.7' : '0.5';
+    html += `<div class="freq-item">
+      <div class="topic">${item.topic}<br><span style="font-size:0.6rem;opacity:0.6;font-family:'DM Mono',monospace">Unit ${item.unit}</span></div>
+      <div class="freq-bar-wrap">
+        <div class="freq-bar" style="width:${item.pct}%;background:${col};opacity:${brightness};">
+          ${item.papers}/9 papers
+        </div>
+      </div>
+      <div class="freq-pct">${item.pct}%</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ════════════════════════════════════════════
+// THEORY DATA
+// ════════════════════════════════════════════
+const THEORY = [
+  // UNIT I
+  [
+    {
+      title:"Entropy & Gibbs Free Energy",
+      occ:"8/9 papers · 89%",
+      body:`
+<p>Entropy (S) is a state function measuring <span class="hl">disorder</span> in a system. The second law states that for a spontaneous process, the total entropy of the universe increases: $\\Delta S_{univ} > 0$.</p>
+<h4>Key Entropy Formulas</h4>
+<div class="formula-box">
+  Isothermal expansion (ideal gas):&nbsp; $\\Delta S = nR\\ln\\frac{V_2}{V_1}$<br>
+  Phase change at const T:&nbsp; $\\Delta S = \\frac{\\Delta H}{T}$<br>
+  Entropy of mixing ideal gases:&nbsp; $\\Delta S_{mix} = -nR\\sum x_i \\ln x_i$
+</div>
+<h4>Gibbs Free Energy</h4>
+<p>The Gibbs function $G = H - TS$ determines spontaneity at constant T and P. A process is spontaneous if $\\Delta G < 0$.</p>
+<ul>
+  <li>$\\Delta G = \\Delta H - T\\Delta S$ (Gibbs-Helmholtz at constant T)</li>
+  <li>$(\\partial G/\\partial T)_P = -S$</li>
+  <li>$(\\partial G/\\partial P)_T = V$</li>
+  <li>$\\Delta G = \\Delta G^\\circ + RT\\ln Q$ — reaction quotient form</li>
+</ul>
+<div class="note-box"><strong>Exam tip:</strong> Numerical values in PYQs — entropy of mixing 100 g O₂ with 60 g N₂ gives ΔSmix ≈ 16.8 J/K. Phase change numericals: use ΔS = ΔHvap/Tb.</div>
+`
+    },
+    {
+      title:"Gibbs-Helmholtz Equation",
+      occ:"6/9 papers · 67%",
+      body:`
+<p>The Gibbs-Helmholtz equation relates the temperature dependence of $\\Delta G$ to enthalpy:</p>
+<div class="formula-box">$\\left[\\frac{\\partial(\\Delta G / T)}{\\partial T}\\right]_P = -\\frac{\\Delta H}{T^2}$</div>
+<p>This is derived from $G = H - TS$ and $S = -(\\partial G/\\partial T)_P$. It has direct applications in calculating how equilibrium constants change with temperature.</p>
+<ul>
+  <li>At constant T: $\\Delta G = \\Delta H - T\\Delta S$</li>
+  <li>Maximum non-expansion (useful) work = $-\\Delta G$ at constant T,P</li>
+</ul>
+`
+    },
+    {
+      title:"Clausius-Clapeyron Equation",
+      occ:"5/9 papers · 56%",
+      body:`
+<p>Describes the phase boundary between two phases and how equilibrium pressure varies with temperature:</p>
+<div class="formula-box">
+$\\frac{dP}{dT} = \\frac{\\Delta H_{vap}}{T\\Delta V}$
+&nbsp;&nbsp;Integrated form:&nbsp; $\\ln\\frac{P_2}{P_1} = -\\frac{\\Delta H_{vap}}{R}\\left(\\frac{1}{T_2}-\\frac{1}{T_1}\\right)$
+</div>
+<p><span class="hl">Application:</span> Why does cooking take longer at high altitude? Lower atmospheric pressure → lower boiling point → food cooks at lower T → longer time.</p>
+<div class="note-box"><strong>Derivation approach:</strong> Start from Clausius-Clapeyron differential form → approximate ΔV ≈ RT/P for ideal gas vapour → integrate between limits P₁,T₁ and P₂,T₂.</div>
+`
+    },
+    {
+      title:"Van't Hoff Isotherm & Isochore",
+      occ:"5/9 papers · 56%",
+      body:`
+<p><span class="hl">Van't Hoff Isotherm:</span> Gives the Gibbs free energy change for a reaction at arbitrary concentrations:</p>
+<div class="formula-box">$\\Delta G = \\Delta G^\\circ + RT\\ln Q$&nbsp;&nbsp;At equilibrium (Q=K): $\\Delta G^\\circ = -RT\\ln K$</div>
+<p><span class="hl">Van't Hoff Isochore:</span> Gives temperature dependence of the equilibrium constant K:</p>
+<div class="formula-box">
+$\\frac{d\\ln K}{dT} = \\frac{\\Delta H^\\circ}{RT^2}$&nbsp;&nbsp;Integrated:&nbsp;
+$\\ln\\frac{K_2}{K_1} = -\\frac{\\Delta H^\\circ}{R}\\left(\\frac{1}{T_2}-\\frac{1}{T_1}\\right)$
+</div>
+<div class="note-box"><strong>Classic PYQ numerical:</strong> K₁ = 18.5 at 925 K, K₂ = 9.25 at 1000 K → ΔH° ≈ –24.7 kJ/mol. Memorise this answer!</div>
+`
+    }
+  ],
+  // UNIT II
+  [
+    {
+      title:"Michaelis-Menten Enzyme Kinetics",
+      occ:"8/9 papers · 89%",
+      body:`
+<p>For enzyme (E) + substrate (S) → product (P) via a complex (ES):</p>
+<div class="formula-box">
+$E + S \\underset{k_{-1}}{\\stackrel{k_1}{\\rightleftharpoons}} ES \\stackrel{k_2}{\\rightarrow} E + P$
+</div>
+<p>Using <span class="hl">steady-state approximation</span> for [ES] (d[ES]/dt ≈ 0), the Michaelis-Menten rate law is:</p>
+<div class="formula-box">
+$r = r_{max}\\frac{[S]}{K_M + [S]}$&nbsp;&nbsp; where &nbsp;$K_M = \\frac{k_{-1}+k_2}{k_1}$&nbsp;&nbsp; $r_{max} = k_2[E]_0$
+</div>
+<p><span class="hl">Lineweaver-Burk plot</span> (double reciprocal):</p>
+<div class="formula-box">
+$\\frac{1}{r} = \\frac{K_M}{r_{max}}\\cdot\\frac{1}{[S]} + \\frac{1}{r_{max}}$
+</div>
+<p>Plot 1/r vs 1/[S]: slope = KM/rmax, y-intercept = 1/rmax, x-intercept = -1/KM.</p>
+<div class="note-box"><strong>Classic PYQ numerical:</strong> KM = 0.5 mM, [S] = 1.0 mM → r/rmax = [S]/(KM+[S]) = 1.0/(0.5+1.0) = <strong>0.667 = 2/3</strong>. This exact numerical appears in 5 papers!</div>
+`
+    },
+    {
+      title:"Consecutive Reactions A→B→C",
+      occ:"7/9 papers · 78%",
+      body:`
+<p>For consecutive first-order reactions $A \\xrightarrow{k_1} B \\xrightarrow{k_2} C$:</p>
+<div class="formula-box">
+$[A] = [A]_0 e^{-k_1 t}$<br>
+$[B] = \\frac{k_1[A]_0}{k_2-k_1}(e^{-k_1 t} - e^{-k_2 t})$<br>
+$[C] = [A]_0 - [A] - [B]$
+</div>
+<p>Time of maximum concentration of intermediate B:</p>
+<div class="formula-box">$t_{max} = \\frac{\\ln(k_2/k_1)}{k_2 - k_1}$</div>
+<p>When $k_1 \\gg k_2$: B forms quickly and its disappearance is the slow step.</p>
+<div class="note-box"><strong>Graph:</strong> A decreases exponentially. B rises then falls with a maximum at t_max. C rises in S-shape to reach [A]₀.</div>
+`
+    },
+    {
+      title:"Arrhenius Equation & Activation Energy",
+      occ:"6/9 papers · 67%",
+      body:`
+<p>The rate constant varies with temperature according to the Arrhenius equation:</p>
+<div class="formula-box">
+$k = Ae^{-E_a/RT}$&nbsp;&nbsp;Logarithmic form:&nbsp; $\\ln k = \\ln A - \\frac{E_a}{RT}$<br><br>
+$\\log k = \\log A - \\frac{E_a}{2.303\\,RT}$&nbsp;&nbsp;Two-temperature form:&nbsp; $\\ln\\frac{k_2}{k_1} = \\frac{E_a}{R}\\left(\\frac{1}{T_1}-\\frac{1}{T_2}\\right)$
+</div>
+<p>Plot of $\\ln k$ vs $1/T$ is a straight line: slope = $-E_a/R$, intercept = $\\ln A$.</p>
+<div class="note-box"><strong>Classic PYQ:</strong> If log k = 14.34 – 1.25×10⁴/T, then Ea = 1.25×10⁴ × 2.303 × R ≈ <strong>239.3 kJ/mol</strong>.</div>
+`
+    }
+  ],
+  // UNIT III
+  [
+    {
+      title:"Woodward-Fieser Rules for λmax",
+      occ:"9/9 papers · 100%",
+      body:`
+<p>Rules for calculating the UV-Vis absorption maximum ($\\lambda_{max}$) of conjugated diene systems:</p>
+<table class="wf-table">
+  <tr><th>Diene Type</th><th>Base Value</th></tr>
+  <tr><td>Acyclic / heteroannular diene</td><td class="nm">214 nm</td></tr>
+  <tr><td>Homoannular diene</td><td class="nm">253 nm</td></tr>
+</table>
+<h4>Increments to add:</h4>
+<table class="wf-table">
+  <tr><th>Feature</th><th>Add (nm)</th></tr>
+  <tr><td>Each extending conjugation (extra C=C)</td><td class="nm">+30</td></tr>
+  <tr><td>Each alkyl substituent on diene</td><td class="nm">+5</td></tr>
+  <tr><td>Exocyclic double bond</td><td class="nm">+5</td></tr>
+  <tr><td>Homoannular diene (if not already base)</td><td class="nm">+39</td></tr>
+</table>
+<div class="note-box"><strong>Example:</strong> For 1,3-butadiene (acyclic, 2 alkyl groups): λmax = 217 + 2×5 = <strong>227 nm</strong>. Always add 5 nm per alkyl substituent attached to the diene carbons.</div>
+`
+    },
+    {
+      title:"IR Spectroscopy – Hooke's Law",
+      occ:"7/9 papers · 78%",
+      body:`
+<p>Molecular vibrations can be modelled as harmonic oscillators. The <span class="hl">stretching frequency</span> (in wavenumbers) is:</p>
+<div class="formula-box">
+$\\tilde{\\nu} = \\frac{1}{2\\pi c}\\sqrt{\\frac{k}{\\mu}}$&nbsp;&nbsp; where &nbsp;$\\mu = \\frac{m_1 m_2}{m_1+m_2}$ (reduced mass)
+</div>
+<p>Higher force constant k → higher frequency. Lighter atoms → higher frequency (C–H > C–C).</p>
+<h4>Vibrational Degrees of Freedom</h4>
+<div class="formula-box">
+Linear molecule: &nbsp;$3N - 5$&nbsp; vibrational modes<br>
+Non-linear molecule: &nbsp;$3N - 6$&nbsp; vibrational modes
+</div>
+<h4>Key Functional Group Stretches</h4>
+<div class="formula-box">
+O–H (free): 3200–3550 cm⁻¹ &nbsp;·&nbsp; N–H: 3300–3500 cm⁻¹<br>
+C=O (carbonyl): 1680–1750 cm⁻¹ &nbsp;·&nbsp; C=C: 1600–1680 cm⁻¹<br>
+C–H (aldehydic): 2700–2850 cm⁻¹ &nbsp;·&nbsp; C≡C: 2100–2260 cm⁻¹
+</div>
+`
+    },
+    {
+      title:"NMR Spectroscopy",
+      occ:"8/9 papers · 89%",
+      body:`
+<p><span class="hl">Chemical shift (δ)</span> is measured in ppm relative to TMS (δ = 0).</p>
+<ul>
+  <li><strong>Shielded proton:</strong> More electron density → higher field → lower δ value</li>
+  <li><strong>Deshielded proton:</strong> Less electron density → downfield → higher δ value</li>
+</ul>
+<h4>Typical Chemical Shift Ranges</h4>
+<div class="formula-box">
+TMS: 0 ppm &nbsp;·&nbsp; CH₃ (alkyl): 0.9–1.5 ppm<br>
+CH₂ (adjacent to C=O): 2–3 ppm &nbsp;·&nbsp; CHO (aldehyde H): ~9–10 ppm<br>
+ArH (aromatic): 6.5–8.5 ppm &nbsp;·&nbsp; OH: 1–6 ppm (variable)
+</div>
+<h4>Spin-Spin Coupling — (n+1) Rule</h4>
+<p>A proton with n equivalent neighbouring protons is split into <span class="hl">n+1 lines</span>. Relative intensities follow Pascal's triangle.</p>
+<div class="formula-box">
+0 neighbours → singlet (1)<br>
+1 neighbour → doublet (1:1)<br>
+2 neighbours → triplet (1:2:1)<br>
+3 neighbours → quartet (1:3:3:1)
+</div>
+<div class="note-box"><strong>Magneto-anisotropic effect:</strong> π electron ring currents in aromatic/C=O groups create local fields that can shield (upfield) or deshield (downfield) nearby protons depending on geometry.</div>
+`
+    },
+    {
+      title:"Beer-Lambert Law (UV-Vis)",
+      occ:"6/9 papers · 67%",
+      body:`
+<p>For a beam of monochromatic light passing through an absorbing solution:</p>
+<div class="formula-box">$A = \\varepsilon c l = \\log\\frac{I_0}{I}$</div>
+<p>where $A$ = absorbance (dimensionless), $\\varepsilon$ = molar extinction coefficient (L mol⁻¹ cm⁻¹), $c$ = concentration (mol/L), $l$ = path length (cm).</p>
+<ul>
+  <li><span class="hl">Chromophore:</span> Group responsible for UV-Vis absorption (e.g., C=O, C=C, C=N)</li>
+  <li><span class="hl">Auxochrome:</span> Group that intensifies absorption when attached to chromophore (e.g., –OH, –NH₂, –OR). Does not absorb itself but causes bathochromic/hypsochromic shift.</li>
+</ul>
+`
+    }
+  ],
+  // UNIT IV
+  [
+    {
+      title:"Nernst Equation & Applications",
+      occ:"9/9 papers · 100%",
+      body:`
+<p>The electrode potential depends on concentration via the Nernst equation:</p>
+<div class="formula-box">
+$E = E^\\circ - \\frac{RT}{nF}\\ln Q = E^\\circ - \\frac{0.0591}{n}\\log Q$ (at 298 K)
+</div>
+<h4>Applications</h4>
+<ul>
+  <li><strong>Equilibrium constant:</strong> At equilibrium E = 0, so $\\Delta G^\\circ = -nFE^\\circ = -RT\\ln K$</li>
+  <li><strong>pH measurement:</strong> $pH = \\frac{E_{cell} - E_{ref}}{0.0591}$ (hydrogen electrode)</li>
+  <li><strong>Solubility product:</strong> Set up cell with sparingly soluble salt, apply Nernst equation</li>
+  <li><strong>ΔG:</strong> $\\Delta G = -nFE$</li>
+</ul>
+<div class="formula-box">
+$\\Delta G^\\circ = -nFE^\\circ$&nbsp;&nbsp;$E_{cell} = E_{cathode} - E_{anode}$<br>
+$K = e^{nFE^\\circ/RT}$&nbsp;&nbsp; $\\log K = \\frac{nE^\\circ}{0.0591}$
+</div>
+<div class="note-box"><strong>Key values to remember:</strong> F = 96485 C/mol ≈ 96500 C/mol. At 298K: RT/F = 0.02569 V, so (2.303RT/F) = 0.0591 V.</div>
+`
+    },
+    {
+      title:"Fuel Cells",
+      occ:"7/9 papers · 78%",
+      body:`
+<p>Fuel cells convert chemical energy → electrical energy via electrochemical reactions. Unlike batteries, they operate continuously with external fuel supply.</p>
+<h4>H₂–O₂ Alkaline Fuel Cell (AFC)</h4>
+<div class="formula-box">
+Anode (–): &nbsp;$H_2 + 2OH^- \\rightarrow 2H_2O + 2e^-$<br>
+Cathode (+): &nbsp;$O_2 + 2H_2O + 4e^- \\rightarrow 4OH^-$<br>
+Overall: &nbsp;$2H_2 + O_2 \\rightarrow 2H_2O$
+</div>
+<h4>Solid Oxide Fuel Cell (SOFC)</h4>
+<p>Electrolyte: <span class="hl">Yttria-stabilised zirconia (YSZ)</span>, operates at 800–1000°C. O²⁻ ions conduct through YSZ.</p>
+<div class="formula-box">
+Anode: &nbsp;$H_2 + O^{2-} \\rightarrow H_2O + 2e^-$<br>
+Cathode: &nbsp;$O_2 + 4e^- \\rightarrow 2O^{2-}$
+</div>
+<h4>Efficiency</h4>
+<div class="formula-box">$\\eta = \\frac{\\Delta G}{\\Delta H} \\times 100\\%$</div>
+<p>Fuel cells are more efficient than heat engines (not limited by Carnot cycle).</p>
+`
+    },
+    {
+      title:"Modern Batteries",
+      occ:"5/9 papers · 56%",
+      body:`
+<h4>Li-ion Battery</h4>
+<div class="formula-box">
+Anode (discharge): &nbsp;$Li_xC_6 \\rightarrow xLi^+ + xe^- + C_6$<br>
+Cathode (discharge): &nbsp;$Li_{1-x}CoO_2 + xLi^+ + xe^- \\rightarrow LiCoO_2$
+</div>
+<p>Li⁺ ions shuttle between graphite anode and LiCoO₂ cathode through organic electrolyte. High energy density, rechargeable.</p>
+<h4>Zn–Air Battery</h4>
+<div class="formula-box">
+Anode: &nbsp;$Zn \\rightarrow Zn^{2+} + 2e^-$<br>
+Cathode: &nbsp;$O_2 + 2H_2O + 4e^- \\rightarrow 4OH^-$
+</div>
+<h4>Ni-MH Battery</h4>
+<div class="formula-box">
+Anode: &nbsp;$MH + OH^- \\rightarrow M + H_2O + e^-$<br>
+Cathode: &nbsp;$NiO(OH) + H_2O + e^- \\rightarrow Ni(OH)_2 + OH^-$
+</div>
+`
+    }
+  ],
+  // UNIT V
+  [
+    {
+      title:"Piezoelectric Materials",
+      occ:"8/9 papers · 89%",
+      body:`
+<p>Piezoelectric materials generate an electric potential in response to mechanical stress, and vice versa.</p>
+<ul>
+  <li><span class="hl">Direct piezoelectric effect:</span> Mechanical stress → electric voltage (used in sensors)</li>
+  <li><span class="hl">Converse (inverse) piezoelectric effect:</span> Applied voltage → mechanical deformation (used in actuators)</li>
+</ul>
+<p><strong>Examples:</strong> Quartz (SiO₂), PZT (lead zirconate titanate – Pb(Zr,Ti)O₃), BaTiO₃, PVDF polymer.</p>
+<p><strong>Applications:</strong> Ultrasonic transducers, gas lighters, accelerometers, sonar, microphones, energy harvesting from vibrations.</p>
+<div class="note-box"><strong>Mechanism:</strong> In non-centrosymmetric crystal structures, applied stress shifts positive and negative ion sublattices asymmetrically → net dipole → measurable voltage.</div>
+`
+    },
+    {
+      title:"Shape Memory Alloys (SMA)",
+      occ:"7/9 papers · 78%",
+      body:`
+<p>SMAs can be deformed at low temperature and recover their original shape upon heating. This is due to a <span class="hl">thermoelastic martensitic transformation</span>.</p>
+<ul>
+  <li>Low T: <strong>martensite phase</strong> (soft, deformable)</li>
+  <li>High T: <strong>austenite phase</strong> (hard, original shape restored)</li>
+</ul>
+<p><strong>Most common SMA:</strong> Nitinol (Ni–Ti alloy, ≈ 55% Ni). Also: Cu-Zn-Al, Cu-Al-Ni.</p>
+<p><strong>Applications:</strong> Medical stents, orthodontic wires, actuators in aerospace, pipe couplings, earthquake dampers, robotic muscles.</p>
+<div class="note-box"><strong>One-way vs Two-way shape memory:</strong> One-way returns to one shape on heating. Two-way remembers different shapes at different temperatures.</div>
+`
+    },
+    {
+      title:"Active vs Passive Smart Materials",
+      occ:"6/9 papers · 67%",
+      body:`
+<p>Smart materials are classified based on how they respond to stimuli:</p>
+<ul>
+  <li><span class="hl">Active smart materials:</span> Can sense and respond to external stimuli by themselves. Generate a signal or action without requiring additional input energy. Example: Piezoelectric, shape memory alloys, magnetostrictive materials.</li>
+  <li><span class="hl">Passive smart materials:</span> Do not generate any signal or energy by themselves. They respond to stimuli but need external energy to create a useful output. Example: Optical fibre sensors (they need external light source).</li>
+</ul>
+<p>A <span class="hl">smart structure</span> integrates sensors + processors + actuators — it can sense, decide, and act.</p>
+<p><strong>Other smart materials:</strong> Electrostrictive (deform in E-field), magnetostrictive (deform in B-field), thermoelectric, photovoltaic, electrochromic materials.</p>
+`
+    }
+  ]
+];
+
+// ════════════════════════════════════════════
+// FORMULA CHEAT SHEET DATA
+// ════════════════════════════════════════════
+const FORMULAS = [
+  {
+    unit:"Unit I — Thermodynamics",
+    color:"var(--u1)",
+    rows:[
+      { name:"Gibbs Free Energy", expr:"ΔG = ΔH − TΔS" },
+      { name:"Gibbs Isotherm", expr:"ΔG = ΔG° + RT ln Q" },
+      { name:"Gibbs-Helmholtz", expr:"[∂(ΔG/T)/∂T]_P = −ΔH/T²" },
+      { name:"At Equilibrium", expr:"ΔG° = −RT ln K" },
+      { name:"T/P dependence", expr:"(∂G/∂T)_P = −S  ·  (∂G/∂P)_T = V" },
+      { name:"Entropy (isothermal)", expr:"ΔS = nR ln(V₂/V₁)" },
+      { name:"Entropy (phase change)", expr:"ΔS = ΔH / T" },
+      { name:"Entropy of mixing", expr:"ΔSₘᵢₓ = −nR Σxᵢ ln xᵢ" },
+      { name:"Clausius-Clapeyron", expr:"ln(P₂/P₁) = −(ΔHᵥₐₚ/R)(1/T₂ − 1/T₁)" },
+      { name:"Van't Hoff Isochore", expr:"ln(K₂/K₁) = −(ΔH°/R)(1/T₂ − 1/T₁)" },
+      { name:"Gibbs-Duhem", expr:"Σnᵢ dμᵢ = 0  (at const T, P)" },
+    ]
+  },
+  {
+    unit:"Unit II — Chemical Kinetics",
+    color:"var(--u2)",
+    rows:[
+      { name:"Arrhenius equation", expr:"k = A·e^(−Eₐ/RT)" },
+      { name:"Arrhenius (log form)", expr:"log k = log A − Eₐ/(2.303RT)" },
+      { name:"Two-temperature Arrhenius", expr:"ln(k₂/k₁) = (Eₐ/R)(1/T₁ − 1/T₂)" },
+      { name:"Michaelis-Menten rate", expr:"r = rₘₐₓ[S] / (Kₘ + [S])" },
+      { name:"Michaelis constant", expr:"Kₘ = (k₋₁ + k₂) / k₁" },
+      { name:"Lineweaver-Burk", expr:"1/r = (Kₘ/rₘₐₓ)·(1/[S]) + 1/rₘₐₓ" },
+      { name:"Consecutive tₘₐₓ", expr:"tₘₐₓ = ln(k₂/k₁) / (k₂ − k₁)" },
+      { name:"1st order half-life", expr:"t₁/₂ = ln 2 / k = 0.693 / k" },
+    ]
+  },
+  {
+    unit:"Unit III — Organic Spectroscopy",
+    color:"var(--u3)",
+    rows:[
+      { name:"Beer-Lambert law", expr:"A = ε·c·l = log(I₀/I)" },
+      { name:"Woodward-Fieser (acyclic diene)", expr:"λₘₐₓ = 214 nm + increments" },
+      { name:"Woodward-Fieser (homoannular)", expr:"λₘₐₓ = 253 nm + increments" },
+      { name:"W-F increment: alkyl group", expr:"+5 nm per substituent" },
+      { name:"W-F increment: extra C=C", expr:"+30 nm per extending conjugation" },
+      { name:"W-F increment: exo double bond", expr:"+5 nm" },
+      { name:"IR Hooke's law", expr:"ν̃ = (1/2πc)√(k/μ)  ;  μ = m₁m₂/(m₁+m₂)" },
+      { name:"Vib. DOF (non-linear)", expr:"3N − 6" },
+      { name:"Vib. DOF (linear)", expr:"3N − 5" },
+      { name:"NMR spin splitting", expr:"n+1 lines (n = equivalent neighbours)" },
+    ]
+  },
+  {
+    unit:"Unit IV — Electrochemistry",
+    color:"var(--u4)",
+    rows:[
+      { name:"Nernst equation", expr:"E = E° − (RT/nF)·ln Q" },
+      { name:"Nernst (25°C)", expr:"E = E° − (0.0591/n)·log Q" },
+      { name:"Gibbs from cell potential", expr:"ΔG = −nFE  ;  ΔG° = −nFE°" },
+      { name:"Equilibrium constant", expr:"log K = nE°/0.0591  (at 298 K)" },
+      { name:"Cell potential", expr:"E_cell = E_cathode − E_anode" },
+      { name:"pH from H-electrode", expr:"pH = (E − E_ref) / 0.0591" },
+      { name:"Fuel cell efficiency", expr:"η = ΔG/ΔH × 100%" },
+      { name:"Faraday constant", expr:"F = 96485 C mol⁻¹" },
+    ]
+  }
+];
+
+// ════════════════════════════════════════════
+// QUIZ QUESTIONS (30 questions)
+// ════════════════════════════════════════════
+const ALL_QUESTIONS = [
+  // UNIT I (7)
+  { unit:"u1", q:"For an isothermal reversible expansion of an ideal gas, the entropy change ΔS equals:", opts:["nR ln(P₂/P₁)","nR ln(V₂/V₁)","ΔH/T","nCᵥ ln(T₂/T₁)"], ans:1, feedback:"Isothermal expansion: ΔS = nR ln(V₂/V₁). Since P₁V₁ = P₂V₂, this also equals −nR ln(P₂/P₁). ΔH/T applies only to phase changes." },
+  { unit:"u1", q:"The Gibbs-Helmholtz equation states [∂(ΔG/T)/∂T]_P equals:", opts:["ΔS/T²","−ΔH/T²","ΔH/T","−ΔS"], ans:1, feedback:"Gibbs-Helmholtz: [∂(ΔG/T)/∂T]_P = −ΔH/T². Derived from G = H − TS and S = −(∂G/∂T)_P." },
+  { unit:"u1", q:"The Clausius-Clapeyron equation explains why water boils at lower than 100°C at high altitudes because:", opts:["Higher altitude means more O₂ pressure","Lower atmospheric pressure reduces the equilibrium vapour pressure needed, lowering Tb","Higher altitude increases ΔHvap","Altitude has no effect; it's due to humidity"], ans:1, feedback:"Lower pressure → lower boiling point. The Clausius-Clapeyron equation shows dP/dT > 0 for vaporisation, so lower P means lower T at which vapour pressure equals atmospheric pressure." },
+  { unit:"u1", q:"At equilibrium, the Gibbs free energy change ΔG for a reaction is:", opts:["Equal to ΔG°","Maximum","Zero","Equal to −RT ln K"], ans:2, feedback:"At equilibrium, Q = K so ΔG = ΔG° + RT ln Q = ΔG° + RT ln K = 0. Note ΔG° = −RT ln K, but ΔG (not ΔG°) = 0 at equilibrium." },
+  { unit:"u1", q:"For the reaction with K₁ = 18.5 at 925 K and K₂ = 9.25 at 1000 K, the sign of ΔH° indicates the reaction is:", opts:["Endothermic (ΔH° > 0)","Thermoneutral (ΔH° = 0)","Exothermic (ΔH° < 0)","Cannot be determined"], ans:2, feedback:"K decreases as T increases (18.5 → 9.25 as T rises), which by Van't Hoff isochore means ΔH° < 0 (exothermic). Calculated ΔH° ≈ −24.7 kJ/mol." },
+  { unit:"u1", q:"The entropy of mixing two ideal gases is always:", opts:["Negative (ΔSmix < 0)","Zero","Positive (ΔSmix > 0)","Dependent on temperature only"], ans:2, feedback:"ΔSmix = −nR Σxᵢ ln xᵢ. Since mole fractions xᵢ are between 0 and 1, ln xᵢ < 0, so ΔSmix > 0 always. Mixing increases disorder." },
+  { unit:"u1", q:"The maximum non-expansion work obtainable from a process at constant T and P is equal to:", opts:["ΔH","-ΔG","−ΔS·T","ΔU"], ans:1, feedback:"−ΔG = maximum non-expansion (useful) work at constant T and P. This is why ΔG < 0 for spontaneous processes — they can do useful work." },
+
+  // UNIT II (7)
+  { unit:"u2", q:"In the Michaelis-Menten model, the Michaelis constant KM equals:", opts:["k₁/(k₋₁+k₂)","(k₋₁+k₂)/k₁","k₂/k₁","k₋₁/k₁"], ans:1, feedback:"KM = (k₋₁ + k₂)/k₁. It represents the substrate concentration at which reaction rate = rmax/2. It's NOT a simple dissociation constant unless k₂ << k₋₁." },
+  { unit:"u2", q:"If KM = 0.5 mM and [S] = 1.0 mM, then r/rmax equals:", opts:["0.333","0.500","0.667","0.750"], ans:2, feedback:"r/rmax = [S]/(KM + [S]) = 1.0/(0.5+1.0) = 1.0/1.5 = 0.667 = 2/3. This exact numerical appears in 5 previous year papers!" },
+  { unit:"u2", q:"In the Lineweaver-Burk double reciprocal plot, the slope equals:", opts:["rmax","KM/rmax","rmax/KM","1/KM"], ans:1, feedback:"The Lineweaver-Burk equation is 1/r = (KM/rmax)·(1/[S]) + 1/rmax. Slope = KM/rmax, y-intercept = 1/rmax, x-intercept = −1/KM." },
+  { unit:"u2", q:"For consecutive reactions A→B→C with rate constants k₁ and k₂, the time at which [B] is maximum is:", opts:["ln(k₁/k₂)/(k₁-k₂)","ln(k₂/k₁)/(k₂-k₁)","(k₂-k₁)/(k₁k₂)","1/(k₁+k₂)"], ans:1, feedback:"tmax = ln(k₂/k₁)/(k₂ − k₁). At this time, d[B]/dt = 0, which means k₁[A] = k₂[B], i.e., rate of formation of B = rate of disappearance." },
+  { unit:"u2", q:"If log k = 14.34 − (1.25×10⁴)/T, then the activation energy Eₐ is approximately:", opts:["1.25×10⁴ J/mol","104 kJ/mol","239.3 kJ/mol","58.4 kJ/mol"], ans:2, feedback:"Eₐ = slope × 2.303 × R = 1.25×10⁴ × 2.303 × 8.314 ≈ 239,300 J/mol ≈ 239.3 kJ/mol. Classic recurring numerical in PYQs!" },
+  { unit:"u2", q:"The steady-state approximation assumes that for an intermediate species X:", opts:["[X] = constant throughout the reaction","d[X]/dt ≈ 0 (rate of formation ≈ rate of consumption)","[X] is very large","[X] follows first-order kinetics"], ans:1, feedback:"Steady-state approximation: the concentration of reactive intermediates is assumed to be quasi-constant, i.e., d[X]/dt ≈ 0. This simplifies multi-step rate expressions." },
+  { unit:"u2", q:"The Lindemann theory of unimolecular reactions explains how molecules gain energy for reaction through:", opts:["Spontaneous quantum tunnelling","Bimolecular collision (activation) followed by unimolecular reaction","Direct photon absorption only","Thermal radiation absorption"], ans:1, feedback:"Lindemann proposed: A + A → A* + A (activation by collision), A* → products (unimolecular). The 'time lag' between activation and reaction allows for deactivation at low pressures." },
+
+  // UNIT III (8)
+  { unit:"u3", q:"Using Woodward-Fieser rules, the base value for a homoannular conjugated diene is:", opts:["214 nm","217 nm","250 nm","253 nm"], ans:3, feedback:"Homoannular diene base = 253 nm. Acyclic/heteroannular diene base = 214 nm. Remember these two — they appear in every paper." },
+  { unit:"u3", q:"In Woodward-Fieser rules, each alkyl substituent on the diene adds:", opts:["5 nm","10 nm","12 nm","30 nm"], ans:0, feedback:"+5 nm per alkyl substituent. +30 nm for each extending conjugation (extra C=C). +5 nm for exocyclic double bond. These three increments are most commonly tested." },
+  { unit:"u3", q:"According to Beer-Lambert law, if concentration is doubled with the same path length, the absorbance:", opts:["Stays the same","Doubles","Halves","Increases by factor of 4"], ans:1, feedback:"A = εcl. Absorbance is directly proportional to concentration. If c doubles, A doubles (assuming the law is obeyed at that concentration range)." },
+  { unit:"u3", q:"A non-linear molecule with N atoms has how many vibrational degrees of freedom?", opts:["3N − 3","3N − 5","3N − 6","3N"], ans:2, feedback:"Non-linear: 3N − 6 vibrational modes (3 translational + 3 rotational degrees of freedom are subtracted). Linear molecule: 3N − 5 (only 2 rotational modes)." },
+  { unit:"u3", q:"The IR stretching frequency of C=O (carbonyl) is typically found in the range:", opts:["1000–1200 cm⁻¹","1400–1500 cm⁻¹","1680–1750 cm⁻¹","3200–3600 cm⁻¹"], ans:2, feedback:"C=O (carbonyl): 1680–1750 cm⁻¹. This is a strong, sharp absorption. Aldehydic C-H shows additional peaks at 2700–2850 cm⁻¹. O-H stretch is at 3200–3550 cm⁻¹." },
+  { unit:"u3", q:"In ¹H-NMR, a proton with 3 equivalent neighbouring protons appears as:", opts:["A doublet","A triplet","A quartet","A singlet"], ans:2, feedback:"n+1 rule: 3 neighbours → 3+1 = 4 lines = quartet. Relative intensity ratio 1:3:3:1 (Pascal's triangle row 4). E.g., CH₃CH₂– shows the CH₂ as quartet." },
+  { unit:"u3", q:"An auxochrome is defined as:", opts:["Any group that absorbs UV-Vis radiation independently","A group that intensifies absorption when conjugated with a chromophore","The highest occupied molecular orbital","A group that causes only red shifts"], ans:1, feedback:"Auxochrome (e.g., –OH, –NH₂, –OR, –Cl): Does NOT absorb UV-Vis itself, but when attached to a chromophore causes bathochromic (red) shift and hyperchromic effect by extending conjugation via lone pairs." },
+  { unit:"u3", q:"In NMR, aromatic protons appear at higher chemical shift (δ 6.5–8.5 ppm) than alkyl protons (δ 0.9–1.5 ppm) because of:", opts:["Stronger hydrogen bonding","Magneto-anisotropic deshielding from the aromatic ring current","Higher electronegativity of sp³ carbon","Stronger Van der Waals interactions"], ans:1, feedback:"The π electrons in the aromatic ring circulate in the applied magnetic field, creating a ring current. This generates a local field that deshields protons in the plane of the ring (aromatic H), shifting them downfield." },
+
+  // UNIT IV (5)
+  { unit:"u4", q:"The Nernst equation at 298 K for a cell reaction is E = E° − (x/n)log Q. The value of x is:", opts:["0.0257","0.0591","0.1183","RT/F"], ans:1, feedback:"At 298 K: (2.303RT/F) = 2.303 × 8.314 × 298 / 96485 ≈ 0.0591 V. So E = E° − (0.0591/n) log Q." },
+  { unit:"u4", q:"For the reaction Zn(s)|Zn²⁺(1M)||Cu²⁺(1M)|Cu(s), if E°(Zn²⁺/Zn) = −0.76V and E°(Cu²⁺/Cu) = +0.34V, then E°_cell is:", opts:["−1.10 V","0.42 V","1.10 V","−0.42 V"], ans:2, feedback:"E°_cell = E°_cathode − E°_anode = +0.34 − (−0.76) = +1.10 V. Cu²⁺ is reduced (cathode), Zn is oxidised (anode). Positive E°_cell means spontaneous reaction." },
+  { unit:"u4", q:"In a Solid Oxide Fuel Cell (SOFC), the electrolyte used is:", opts:["Concentrated KOH solution","Phosphoric acid","Nafion membrane","Yttria-stabilised zirconia (YSZ)"], ans:3, feedback:"SOFC uses YSZ (Yttria-stabilised ZrO₂) as a solid electrolyte that conducts O²⁻ ions at 800–1000°C. This is one of the most frequently asked facts about fuel cells." },
+  { unit:"u4", q:"If ΔG° = −nFE°, then for a spontaneous cell with E° > 0:", opts:["ΔG° > 0 and K < 1","ΔG° < 0 and K > 1","ΔG° = 0 and K = 1","ΔG° > 0 and K > 1"], ans:1, feedback:"For E° > 0: ΔG° = −nFE° < 0 (spontaneous). And ΔG° = −RT ln K < 0 means ln K > 0, so K > 1 (products favoured at equilibrium)." },
+  { unit:"u4", q:"In a Li-ion battery, during discharge, lithium ions move from:", opts:["Cathode to anode internally","Anode (graphite) to cathode (LiCoO₂) through the electrolyte","Cathode to electrolyte only","External circuit to anode"], ans:1, feedback:"During discharge: Li is oxidised at the anode (graphite), Li⁺ ions travel through electrolyte to cathode (LiCoO₂), and electrons flow through external circuit. During charging, the process reverses." },
+
+  // UNIT V (3)
+  { unit:"u5", q:"The direct piezoelectric effect refers to:", opts:["Voltage applied → mechanical deformation","Mechanical stress applied → generation of electric potential","Temperature change → shape recovery","Magnetic field → electrical signal"], ans:1, feedback:"Direct piezoelectric effect: mechanical stress → electric voltage (used in sensors, microphones, gas lighters). Converse (inverse) effect: voltage → mechanical deformation (used in actuators, ultrasound transducers)." },
+  { unit:"u5", q:"Nitinol, the most common shape memory alloy, is composed of:", opts:["Nickel and Aluminium","Nickel and Titanium","Copper and Tin","Iron and Chromium"], ans:1, feedback:"Nitinol = Nickel Titanium Naval Ordnance Laboratory. Composition ≈ 55% Ni + 45% Ti. It undergoes a reversible thermoelastic martensitic transformation enabling shape memory behaviour." },
+  { unit:"u5", q:"Active smart materials are those that:", opts:["Need an external energy source to respond","Can sense AND respond to stimuli without additional energy input","Only respond to temperature changes","Are electrically insulating"], ans:1, feedback:"Active smart materials (e.g., piezoelectrics, SMAs) can both sense a stimulus and generate a useful response (signal or mechanical action) without needing additional external energy. Passive materials need an external energy source." }
+];
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+let currentQuestions = [...ALL_QUESTIONS];
+let currentQ = 0;
+let score = 0;
+let answered = [];
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  buildFreqBars();
+  buildTheory();
+  buildFormulaSheet();
+  initQuiz();
+  setTimeout(()=>{
+    if(window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+  }, 800);
+});
+
+// ════════════════════════════════════════════
+// UNIT TABS
+// ════════════════════════════════════════════
+function showUnit(idx, el) {
+  document.querySelectorAll('.unit-panel').forEach(p=>{p.classList.remove('active');});
+  document.querySelectorAll('.unit-tab').forEach(t=>{
+    t.classList.remove('active');
+    t.style.background='';
+    t.style.color='';
+  });
+  document.getElementById('unit-'+idx).classList.add('active');
+  el.classList.add('active');
+  el.style.background = UNIT_COLORS[idx];
+  el.style.color = '#0a0a0f';
+  setTimeout(()=>{ if(window.MathJax) MathJax.typesetPromise(); },200);
+}
+
+// ════════════════════════════════════════════
+// THEORY CARDS
+// ════════════════════════════════════════════
+function buildTheory() {
+  const uColors = ["u1","u2","u3","u4","u5"];
+  THEORY.forEach((unitCards, unitIdx) => {
+    const container = document.getElementById('unit-'+unitIdx);
+    let html = '';
+    unitCards.forEach(card => {
+      html += `<div class="card ${uColors[unitIdx]}">
+        <div class="occ-badge"><span class="occ-dot"></span>${card.occ}</div>
+        <h3>${card.title}</h3>
+        ${card.body}
+      </div>`;
+    });
+    container.innerHTML = html;
+  });
+}
+
+// ════════════════════════════════════════════
+// FORMULA SHEET
+// ════════════════════════════════════════════
+function buildFormulaSheet() {
+  const container = document.getElementById('formula-sheet');
+  let html = '<div class="cheat-grid">';
+  FORMULAS.forEach(section => {
+    html += `<div class="cheat-card">
+      <div class="cheat-unit" style="color:${section.color}">${section.unit}</div>`;
+    section.rows.forEach(row => {
+      html += `<div class="formula-row">
+        <div class="formula-name">${row.name}</div>
+        <div class="formula-expr">${row.expr}</div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// ════════════════════════════════════════════
+// QUIZ
+// ════════════════════════════════════════════
+function initQuiz(qs) {
+  if(qs) currentQuestions = qs;
+  currentQ = 0; score = 0;
+  answered = new Array(currentQuestions.length).fill(null);
+  buildDots();
+  renderQuestion();
+  document.getElementById('result-screen').style.display='none';
+  document.getElementById('quiz-area').style.display='block';
+}
+
+function buildDots() {
+  const row = document.getElementById('dots-row');
+  row.innerHTML = currentQuestions.map((_,i) => `<span class="q-dot ${i===0?'current':''}" id="dot-${i}"></span>`).join('');
+}
+
+function updateDots() {
+  currentQuestions.forEach((_,i) => {
+    const d = document.getElementById('dot-'+i);
+    if(!d) return;
+    d.className = 'q-dot';
+    if(answered[i] !== null) d.classList.add('done');
+    if(i === currentQ) d.classList.add('current');
+  });
+}
+
+function renderQuestion() {
+  const q = currentQuestions[currentQ];
+  const total = currentQuestions.length;
+  const answered_count = answered.filter(a=>a!==null).length;
+
+  document.getElementById('quiz-progress').style.width = `${((currentQ+1)/total)*100}%`;
+  document.getElementById('q-counter').textContent = `Question ${currentQ+1} of ${total}`;
+  document.getElementById('score-display').textContent = `Score: ${score} / ${answered_count}`;
+
+  const unitLabel = {
+    u1:'Unit I · Thermo', u2:'Unit II · Kinetics',
+    u3:'Unit III · Spectroscopy', u4:'Unit IV · Electrochemistry',
+    u5:'Unit V · Smart Materials'
+  }[q.unit] || q.unit;
+
+  const optLetters = ['A','B','C','D'];
+  const isAnswered = answered[currentQ] !== null;
+  const selected = answered[currentQ];
+
+  let optsHtml = q.opts.map((opt, i) => {
+    let cls = 'option';
+    if(isAnswered) {
+      cls += ' locked';
+      if(i === q.ans) cls += ' correct';
+      else if(i === selected && selected !== q.ans) cls += ' wrong';
+    }
+    return `<div class="${cls}" onclick="selectAnswer(${i})" id="opt-${i}">
+      <span class="opt-letter">${optLetters[i]}</span>
+      <span>${opt}</span>
+    </div>`;
+  }).join('');
+
+  const fbClass = isAnswered ? (selected === q.ans ? 'correct show' : 'wrong show') : '';
+  const fbText = isAnswered ? `<strong>${selected===q.ans?'✓ Correct!':'✗ Incorrect'}</strong>${q.feedback}` : '';
+
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="question-card">
+      <div class="q-number">Q${currentQ+1} &nbsp;·&nbsp; <span class="quiz-unit-badge">${unitLabel}</span></div>
+      <div class="q-text-quiz">${q.q}</div>
+      <div class="options">${optsHtml}</div>
+      <div class="feedback-box ${fbClass}">${fbText}</div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn btn-ghost" onclick="prevQ()" ${currentQ===0?'disabled':''}>← Prev</button>
+      ${currentQ < total-1
+        ? `<button class="btn btn-primary" onclick="nextQ()">Next →</button>`
+        : `<button class="btn btn-primary" onclick="showResults()">Finish Quiz</button>`
+      }
+      <span style="font-size:0.7rem;color:var(--muted);font-family:'DM Mono',monospace;margin-left:auto">${answered.filter(a=>a!==null).length}/${total} answered</span>
+    </div>
+  `;
+  updateDots();
+  setTimeout(()=>{ if(window.MathJax) MathJax.typesetPromise(); },150);
+}
+
+function selectAnswer(idx) {
+  if(answered[currentQ] !== null) return;
+  const q = currentQuestions[currentQ];
+  answered[currentQ] = idx;
+  if(idx === q.ans) score++;
+  renderQuestion();
+}
+
+function nextQ() {
+  if(currentQ < currentQuestions.length-1) { currentQ++; renderQuestion(); }
+}
+function prevQ() {
+  if(currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+function showResults() {
+  document.getElementById('quiz-area').style.display='none';
+  const total = currentQuestions.length;
+  const pct = Math.round((score/total)*100);
+  const grade = pct>=80?['var(--accent3)','Excellent! 🎯']:pct>=60?['var(--accent4)','Good Work 📚']:pct>=40?['var(--accent5)','Keep Studying 💪']:['var(--danger)','Needs More Practice 📖'];
+
+  const unitMap = {u1:'Thermodynamics',u2:'Kinetics',u3:'Spectroscopy',u4:'Electrochemistry',u5:'Smart Materials'};
+  const unitColors = {u1:'var(--u1)',u2:'var(--u2)',u3:'var(--u3)',u4:'var(--u4)',u5:'var(--u5)'};
+  const unitStats = {};
+  currentQuestions.forEach((q,i)=>{
+    if(!unitStats[q.unit]) unitStats[q.unit]={total:0,correct:0};
+    unitStats[q.unit].total++;
+    if(answered[i]===q.ans) unitStats[q.unit].correct++;
+  });
+
+  let barsHtml = Object.entries(unitStats).map(([u,s])=>`
+    <div class="result-bar-row">
+      <span>${unitMap[u]||u}</span>
+      <div class="result-mini-bar"><div class="result-mini-fill" style="width:${Math.round(s.correct/s.total*100)}%;background:${unitColors[u]||'var(--accent1)'};"></div></div>
+      <span style="font-family:'DM Mono',monospace;font-size:0.68rem;color:${unitColors[u]||'var(--accent1)'}">${s.correct}/${s.total}</span>
+    </div>`).join('');
+
+  document.getElementById('result-screen').style.display='block';
+  document.getElementById('result-screen').innerHTML = `
+    <div class="result-screen">
+      <div style="font-family:'DM Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)">Quiz Complete</div>
+      <div class="result-score" style="color:${grade[0]}">${pct}%</div>
+      <div class="result-label">${score} of ${total} correct · ${grade[1]}</div>
+      <div class="result-bars">${barsHtml}</div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="initQuiz()">Retry All Questions</button>
+        <button class="btn btn-ghost" onclick="showTab('studymode', document.querySelector('.tab:nth-child(5)'))">Back to Study Mode</button>
+      </div>
+    </div>
+  `;
+}
+
+function filterQuiz(filter, el) {
+  document.querySelectorAll('.chip').forEach(c=>{
+    c.classList.remove('active');
+    c.style.background=''; c.style.borderColor=''; c.style.color='';
+  });
+  el.classList.add('active');
+  el.style.background='var(--accent1)'; el.style.borderColor='var(--accent1)'; el.style.color='#0a0a0f';
+  const qs = filter==='all' ? ALL_QUESTIONS : ALL_QUESTIONS.filter(q=>q.unit===filter);
+  initQuiz(qs);
+}
+</script>
+</body>
+</html>
